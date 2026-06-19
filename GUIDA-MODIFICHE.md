@@ -150,8 +150,24 @@ I giochi sono elencati in **un solo file**: `src/data/games.ts`.
 - **Rapporto:** 16:9
 - **Risoluzione consigliata:** 1280 × 720 px (o 1600 × 900)
 - **Formato:** JPG o WebP (più leggeri), max ~300 KB
-- **Zona sicura:** il sito mette nome + sottotitolo in basso a sinistra e un'emoji
-  in alto a destra. Tieni il soggetto principale in alto/al centro.
+- **Zona sicura:** il sito mette nome + sottotitolo in basso a sinistra.
+  Tieni il soggetto principale in alto/al centro.
+
+### Alleggerire le immagini pesanti (importante!)
+Le immagini appena create pesano spesso 2-3 MB: troppo. C'è un comando che le
+ottimizza tutte in automatico.
+
+1. Metti le immagini (anche pesanti) in `public/games/` — conviene nominarle
+   come lo `slug` del gioco, es. `gta-vi.png`, `league-of-legends.png`
+2. Apri PowerShell nella cartella del progetto ed esegui:
+
+   ```powershell
+   npm run ottimizza
+   ```
+
+3. Lo script ridimensiona a 1280px, converte in JPG leggero e sposta gli
+   originali pesanti in `_immagini-originali/` (backup, non caricato online).
+4. In `src/data/games.ts`, nel gioco, metti `image: "/games/<slug>.jpg"`.
 
 Se un gioco **non** ha il campo `image`, il sito usa automaticamente lo sfondo
 colorato (`thumb`). Quindi puoi aggiungere le immagini a poco a poco.
