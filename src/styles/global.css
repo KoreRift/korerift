@@ -717,3 +717,97 @@ footer {
   .hero-btns { flex-direction: column; }
   .stats-grid { grid-template-columns: 1fr 1fr; }
 }
+
+/* ══════════════════════════════════════════
+   PAGINE INTERNE (Guide, Build, News, About...)
+══════════════════════════════════════════ */
+
+/* la card-cta ora può essere un <span> oltre che <a> */
+.card-cta span {
+  font-family: var(--fh); font-size: .72rem; font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: var(--black); display: inline-flex; align-items: center; gap: .35rem;
+  padding: .4rem .9rem; border: 2px solid var(--black);
+  border-radius: 6px; transition: background .2s, color .2s;
+}
+.content-card:hover .card-cta span { background: var(--black); color: var(--white); }
+
+/* intestazione colorata in cima alle pagine interne */
+.page-hero {
+  background: var(--lgrey);
+  border-bottom: 2px solid var(--border);
+  padding: 3rem 2rem;
+  position: relative; overflow: hidden;
+}
+.page-hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: radial-gradient(circle, rgba(255,46,179,.1) 2px, transparent 2px);
+  background-size: 26px 26px; pointer-events: none;
+}
+.page-hero-inner { max-width: 1400px; margin: 0 auto; position: relative; z-index: 1; }
+.page-eyebrow {
+  font-family: var(--fh); font-size: .75rem; font-weight: 700;
+  letter-spacing: .2em; text-transform: uppercase; color: var(--pink);
+  margin-bottom: .4rem; display: flex; align-items: center; gap: .5rem;
+}
+.page-title {
+  font-family: var(--fn); font-size: clamp(2.2rem, 5vw, 3.6rem);
+  letter-spacing: .04em; color: var(--black); line-height: 1;
+}
+.page-title .pink { color: var(--pink); }
+.page-title .blue { color: var(--blue); }
+.page-subtitle {
+  font-size: .95rem; font-weight: 700; color: var(--grey);
+  margin-top: .8rem; max-width: 600px; line-height: 1.6;
+}
+
+/* griglia di card nelle liste */
+.cards-grid {
+  max-width: 1400px; margin: 0 auto;
+  padding: 2.5rem 2rem 3.5rem;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem;
+}
+@media (max-width: 1000px) { .cards-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 640px)  { .cards-grid { grid-template-columns: 1fr; } }
+
+/* ── ARTICOLO SINGOLO (contenuto Markdown) ── */
+.article-wrap { max-width: 760px; margin: 0 auto; padding: 3rem 2rem 4rem; }
+.article-back {
+  font-family: var(--fh); font-size: .75rem; font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--grey);
+  display: inline-flex; align-items: center; gap: .4rem; margin-bottom: 1.5rem;
+  transition: color .2s;
+}
+.article-back:hover { color: var(--pink); }
+
+/* tipografia del corpo dell'articolo */
+.prose { color: var(--black); font-size: 1.02rem; line-height: 1.75; }
+.prose h2 {
+  font-family: var(--fh); font-size: 1.5rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .04em;
+  margin: 2.2rem 0 .8rem; padding-left: .7rem;
+  border-left: 4px solid var(--pink);
+}
+.prose h3 { font-family: var(--fh); font-size: 1.15rem; margin: 1.6rem 0 .6rem; }
+.prose p { margin-bottom: 1.1rem; }
+.prose ul, .prose ol { margin: 0 0 1.1rem 1.4rem; }
+.prose li { margin-bottom: .5rem; }
+.prose a { color: var(--pink); font-weight: 700; text-decoration: underline; }
+.prose strong { color: var(--black); font-weight: 800; }
+.prose blockquote {
+  background: var(--lgrey); border-left: 4px solid var(--yellow);
+  padding: 1rem 1.2rem; border-radius: 0 8px 8px 0; margin: 1.4rem 0;
+  font-weight: 600; color: var(--dark);
+}
+.prose code {
+  background: var(--lgrey); padding: .12rem .4rem; border-radius: 4px;
+  font-size: .9em;
+}
+
+/* contenuto testuale generico (about, community) */
+.text-section { max-width: 760px; margin: 0 auto; padding: 3rem 2rem 4rem; }
+.empty-note {
+  max-width: 760px; margin: 0 auto; padding: 3rem 2rem 4rem;
+  text-align: center; color: var(--grey); font-weight: 600;
+}

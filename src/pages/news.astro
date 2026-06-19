@@ -1,0 +1,40 @@
+---
+import Layout from "../layouts/Layout.astro";
+import ContentCard from "../components/ContentCard.astro";
+import { getCollection } from "astro:content";
+
+// Raccoglie da guide + build tutto ciò che è categoria NEWS.
+const guides = await getCollection("guide");
+const builds = await getCollection("build");
+const news = [...guides, ...builds]
+  .filter((e) => e.data.category === "NEWS")
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<Layout title="News — KoreRift" current="news">
+  <header class="page-hero">
+    <div class="page-hero-inner">
+      <div class="page-eyebrow" style="color:#009990"><i class="fas fa-bolt"></i> News &amp; Update</div>
+      <h1 class="page-title">ULTIME <span class="pink">NEWS</span></h1>
+      <p class="page-subtitle">Eventi, banner e aggiornamenti dai tuoi giochi preferiti.</p>
+    </div>
+  </header>
+
+  {news.length > 0 ? (
+    <div class="cards-grid">
+      {news.map((n) => (
+        <ContentCard
+          href={`/${n.collection}/${n.id}`}
+          game={n.data.game}
+          title={n.data.title}
+          description={n.data.description}
+          category={n.data.category}
+          thumb={n.data.thumb}
+          emoji={n.data.emoji}
+        />
+      ))}
+    </div>
+  ) : (
+    <p class="empty-note">Nessuna news al momento. Torna presto! 👀</p>
+  )}
+</Layout>

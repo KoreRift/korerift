@@ -1,0 +1,28 @@
+---
+// ArticleLayout.astro — cornice per una singola guida/build (contenuto Markdown).
+import Layout from "./Layout.astro";
+
+const { data, backHref = "/guide", backLabel = "Tutte le guide", current = "guide" } = Astro.props;
+const dateStr = data.date.toLocaleDateString("it-IT", { day: "numeric", month: "long", year: "numeric" });
+---
+
+<Layout title={`${data.title} — KoreRift`} description={data.description} current={current}>
+  <header class="page-hero">
+    <div class="page-hero-inner">
+      <a href={backHref} class="article-back"><i class="fas fa-arrow-left"></i> {backLabel}</a>
+      <div class="page-eyebrow">{data.emoji} {data.game} · {data.category}</div>
+      <h1 class="page-title">{data.title}</h1>
+      <p class="page-subtitle">{data.description}</p>
+      <p class="list-meta" style="margin-top:1rem">
+        <i class="far fa-clock"></i> {dateStr} &nbsp;·&nbsp;
+        <i class="far fa-book-open"></i> {data.readingTime}
+      </p>
+    </div>
+  </header>
+
+  <article class="article-wrap">
+    <div class="prose">
+      <slot />
+    </div>
+  </article>
+</Layout>

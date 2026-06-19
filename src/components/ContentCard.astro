@@ -1,0 +1,27 @@
+---
+// ContentCard.astro — card di anteprima per guide/build/news nelle pagine lista.
+// Riceve i dati di un articolo e ne disegna la card in stile KoreRift.
+const { href, game, title, description, category = "GUIDA", thumb = "gt-wuwa", emoji = "🎮" } = Astro.props;
+
+// La categoria decide il colore del badge e l'icona.
+const styleByCategory = {
+  GUIDA: { badge: "cb-pink",   icon: "ci-pink",   fa: "fa-bolt" },
+  BUILD: { badge: "cb-blue",   icon: "ci-blue",   fa: "fa-crown" },
+  NEWS:  { badge: "cb-cyan",   icon: "ci-cyan",   fa: "fa-bolt" },
+};
+const s = styleByCategory[category] ?? { badge: "cb-yellow", icon: "ci-yellow", fa: "fa-star" };
+---
+
+<a href={href} class="content-card">
+  <div class={`card-thumb ${thumb}`}>
+    <div class="card-thumb-art">{emoji}</div>
+    <div class={`card-badge ${s.badge}`}><i class={`fas ${s.fa}`}></i> {category}</div>
+    <div class={`card-icon-badge ${s.icon}`}><i class={`fas ${s.fa}`}></i></div>
+  </div>
+  <div class="card-body">
+    <span class="card-game">{game}</span>
+    <h3 class="card-title">{title}</h3>
+    <p class="card-desc">{description}</p>
+    <div class="card-cta"><span>LEGGI ORA <i class="fas fa-arrow-right"></i></span></div>
+  </div>
+</a>

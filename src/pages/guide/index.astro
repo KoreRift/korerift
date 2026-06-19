@@ -1,0 +1,34 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import ContentCard from "../../components/ContentCard.astro";
+import { getCollection } from "astro:content";
+
+// Prende tutte le guide e le ordina dalla più recente.
+const guides = (await getCollection("guide")).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+---
+
+<Layout title="Guide — KoreRift" current="guide">
+  <header class="page-hero">
+    <div class="page-hero-inner">
+      <div class="page-eyebrow"><i class="fas fa-bolt"></i> Guide</div>
+      <h1 class="page-title">TUTTE LE <span class="pink">GUIDE</span></h1>
+      <p class="page-subtitle">Guide chiare e testate per ogni gioco. Niente filler, solo ciò che serve.</p>
+    </div>
+  </header>
+
+  <div class="cards-grid">
+    {guides.map((g) => (
+      <ContentCard
+        href={`/guide/${g.id}`}
+        game={g.data.game}
+        title={g.data.title}
+        description={g.data.description}
+        category={g.data.category}
+        thumb={g.data.thumb}
+        emoji={g.data.emoji}
+      />
+    ))}
+  </div>
+</Layout>

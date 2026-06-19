@@ -1,0 +1,37 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const socials = [
+  { name: "TikTok",  cls: "js-insta",   icon: "fa-tiktok",     url: "https://www.tiktok.com/@korerift" },
+  { name: "Twitch",  cls: "js-twitch",  icon: "fa-twitch",     url: "https://www.twitch.tv/korerift" },
+  { name: "YouTube", cls: "js-youtube", icon: "fa-youtube",    url: "https://www.youtube.com/@Korerift" },
+  { name: "X",       cls: "js-x",       icon: "fa-x-twitter",  url: "https://x.com/KoreRift" },
+];
+---
+
+<Layout title="Community — KoreRift" current="community">
+  <header class="page-hero">
+    <div class="page-hero-inner">
+      <div class="page-eyebrow"><i class="fas fa-users"></i> Community</div>
+      <h1 class="page-title">ENTRA NELLA <span class="pink">CREW</span></h1>
+      <p class="page-subtitle">Connettiti, condividi le tue build e livella insieme alla community di KoreRift.</p>
+    </div>
+  </header>
+
+  <section class="text-section">
+    <div class="join-card">
+      <p class="join-title">JOIN THE<br><span class="pink">COMMUNITY!</span> 👑</p>
+      <div class="join-socials">
+        {socials.map((s) => (
+          <a href={s.url} target="_blank" rel="noopener" class={`join-social ${s.cls}`} aria-label={s.name}>
+            <i class={`fab ${s.icon}`}></i>
+          </a>
+        ))}
+      </div>
+      <p class="join-sub">Connettiti. Condividi. Livella insieme.</p>
+      <a href="https://www.twitch.tv/korerift" target="_blank" rel="noopener" class="btn-join-discord">
+        <i class="fab fa-twitch"></i> ENTRA SU TWITCH &rarr;
+      </a>
+    </div>
+  </section>
+</Layout>

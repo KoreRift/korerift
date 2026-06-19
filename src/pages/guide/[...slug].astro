@@ -1,0 +1,21 @@
+---
+import ArticleLayout from "../../layouts/ArticleLayout.astro";
+import { getCollection, render } from "astro:content";
+
+// getStaticPaths: dice ad Astro QUALI pagine creare (una per ogni guida).
+export async function getStaticPaths() {
+  const guides = await getCollection("guide");
+  return guides.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+// render() trasforma il Markdown nel componente <Content /> da mostrare.
+const { Content } = await render(entry);
+---
+
+<ArticleLayout data={entry.data} backHref="/guide" backLabel="Tutte le guide" current="guide">
+  <Content />
+</ArticleLayout>

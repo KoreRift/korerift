@@ -1,0 +1,33 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import ContentCard from "../../components/ContentCard.astro";
+import { getCollection } from "astro:content";
+
+const builds = (await getCollection("build")).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+---
+
+<Layout title="Build — KoreRift" current="build">
+  <header class="page-hero">
+    <div class="page-hero-inner">
+      <div class="page-eyebrow" style="color:var(--blue)"><i class="fas fa-crown"></i> Build</div>
+      <h1 class="page-title">LE MIGLIORI <span class="blue">BUILD</span></h1>
+      <p class="page-subtitle">Build ottimizzate: armi, artefatti e team per spremere ogni personaggio.</p>
+    </div>
+  </header>
+
+  <div class="cards-grid">
+    {builds.map((b) => (
+      <ContentCard
+        href={`/build/${b.id}`}
+        game={b.data.game}
+        title={b.data.title}
+        description={b.data.description}
+        category={b.data.category}
+        thumb={b.data.thumb}
+        emoji={b.data.emoji}
+      />
+    ))}
+  </div>
+</Layout>
