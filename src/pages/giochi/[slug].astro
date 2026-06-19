@@ -1,0 +1,52 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import ContentCard from "../../components/ContentCard.astro";
+import { getCollection } from "astro:content";
+import { games } from "../../data/games";
+
+// Una pagina per ogni gioco dell'elenco.
+export async function getStaticPaths() {
+  return games.map((game) => ({
+    params: { slug: game.slug },
+    props: { game },
+  }));
+}
+
+const { game } = Astro.props;
+
+// Prende guide + build e tiene solo quelle di QUESTO gioco.
+const guides = await getCollection("guide");
+const builds = await getCollection("build");
+const items = [...guides, ...builds]
+  .filter((e) => e.data.game === game.name)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<Layout title={`${game.name} — KoreRift`} current="giochi">
+  <header class="page-hero">
+    <div class="page-hero-inner">
+      <a href="/giochi" class="article-back"><i class="fas fa-arrow-left"></i> Tutti i giochi</a>
+      <div class="page-eyebrow">{game.emoji} Giochi</div>
+      <h1 class="page-title">{game.name}</h1>
+      <p class="page-subtitle">{game.tagline}</p>
+    </div>
+  </header>
+
+  {items.length > 0 ? (
+    <div class="cards-grid">
+      {items.map((e) => (
+        <ContentCard
+          href={`/${e.collection}/${e.id}`}
+          game={e.data.game}
+          title={e.data.title}
+          description={e.data.description}
+          category={e.data.category}
+          thumb={e.data.thumb}
+          emoji={e.data.emoji}
+        />
+      ))}
+    </div>
+  ) : (
+    <p class="empty-note">Ancora nessun contenuto per {game.name}. Sta arrivando! 🚀</p>
+  )}
+</Layout>

@@ -1,0 +1,28 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import GameBanner from "../../components/GameBanner.astro";
+import { games } from "../../data/games";
+---
+
+<Layout title="Giochi — KoreRift" current="giochi">
+  <header class="page-hero">
+    <div class="page-hero-inner">
+      <div class="page-eyebrow"><i class="fas fa-gamepad"></i> Giochi</div>
+      <h1 class="page-title">SCEGLI IL TUO <span class="pink">GIOCO</span></h1>
+      <p class="page-subtitle">Clicca un gioco per vedere tutte le guide e le build dedicate.</p>
+    </div>
+  </header>
+
+  <div class="games-grid">
+    {games.map((g) => (
+      <GameBanner
+        slug={g.slug}
+        name={g.name}
+        thumb={g.thumb}
+        emoji={g.emoji}
+        tagline={g.tagline}
+        image={g.image}
+      />
+    ))}
+  </div>
+</Layout>
