@@ -1,0 +1,6 @@
+Metti qui i banner dei giochi (rapporto 16:9, es. 1280x720, JPG/WebP).
+
+Esempio: genshin-impact.jpg
+Poi in src/data/games.ts, nel gioco, aggiungi:  image: "/games/genshin-impact.jpg"
+
+(il percorso parte da /games/ , senza scrivere "public")
