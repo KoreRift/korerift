@@ -28,6 +28,7 @@ export const games: Game[] = [
     thumb: "gt-genshin",
     emoji: "🌌",
     tagline: "RPG a turni in viaggio tra le stelle.",
+    image: "/games/honkai-star-rail.jpg",
   },
   {
     slug: "wuthering-waves",
@@ -35,6 +36,7 @@ export const games: Game[] = [
     thumb: "gt-wuwa",
     emoji: "🌊",
     tagline: "Action RPG dinamico e veloce.",
+    image: "/games/wuthering-waves.jpg",
   },
   {
     slug: "zenless-zone-zero",
@@ -42,6 +44,7 @@ export const games: Game[] = [
     thumb: "gt-mha",
     emoji: "🏙️",
     tagline: "Action urbano, stiloso e frenetico.",
+    image: "/games/zenless-zone-zero.jpg",
   },
   {
     slug: "arknights-endfield",
@@ -49,6 +52,7 @@ export const games: Game[] = [
     thumb: "gt-genshin",
     emoji: "🤖",
     tagline: "Strategy RPG 3D nel mondo di Arknights.",
+    image: "/games/arknights-endfield.jpg",
   },
   {
     slug: "gta-vi",
@@ -56,6 +60,7 @@ export const games: Game[] = [
     thumb: "gt-mha",
     emoji: "🌴",
     tagline: "Il ritorno a Vice City. Open world crime.",
+    image: "/games/gta-vi.jpg",
   },
   {
     slug: "league-of-legends",
@@ -63,6 +68,7 @@ export const games: Game[] = [
     thumb: "gt-genshin",
     emoji: "⚔️",
     tagline: "Il MOBA competitivo più giocato al mondo.",
+    image: "/games/league-of-legends.jpg",
   },
   {
     slug: "inazuma-eleven-cross",
@@ -70,6 +76,7 @@ export const games: Game[] = [
     thumb: "gt-mha",
     emoji: "⚽",
     tagline: "Calcio e tecniche speciali: la leggenda continua.",
+    image: "/games/inazuma-eleven-cross.jpg",
   },
   {
     slug: "pokemon-champions",
@@ -77,6 +84,7 @@ export const games: Game[] = [
     thumb: "gt-creator",
     emoji: "⚡",
     tagline: "Battaglie competitive tra Allenatori.",
+    image: "/games/pokemon-champions.jpg",
   },
 ];
 
