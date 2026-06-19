@@ -1,5 +1,7 @@
 # build output
 dist/
+# backup immagini originali (pesanti)
+_immagini-originali/
 # generated types
 .astro/
 
