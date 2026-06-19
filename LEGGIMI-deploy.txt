@@ -1,0 +1,66 @@
+═══════════════════════════════════════════════════════════
+  KORERIFT — Come aggiornare e pubblicare il sito
+═══════════════════════════════════════════════════════════
+
+Progetto:  C:\Users\bened\korerift
+Dominio:   https://korerift.com
+GitHub:    https://github.com/KoreRift/korerift
+
+
+───────────────────────────────────────────────────────────
+ CICLO DI AGGIORNAMENTO (da ripetere ogni volta che cambi qualcosa)
+───────────────────────────────────────────────────────────
+
+Apri PowerShell nella cartella del progetto:
+    cd C:\Users\bened\korerift
+
+1) ANTEPRIMA mentre lavori (opzionale):
+    npm run dev
+   → apri http://localhost:4321  (si aggiorna da solo a ogni modifica)
+   → premi CTRL+C per fermarlo
+
+2) SALVA su GitHub (backup):
+    git add -A
+    git commit -m "descrizione di cosa hai cambiato"
+    git push
+
+3) GENERA i file del sito:
+    npm run build
+   → crea/aggiorna la cartella  dist/
+
+4) CARICA su TopHost via FTP:
+   → con FileZilla, carica il CONTENUTO di  dist/  nella cartella pubblica
+
+
+───────────────────────────────────────────────────────────
+ AGGIUNGERE CONTENUTI (senza programmare)
+───────────────────────────────────────────────────────────
+
+• Nuova GUIDA:  crea un file .md in   src/content/guide/
+• Nuova BUILD:  crea un file .md in   src/content/build/
+  (copia un file esistente e cambia testo + intestazione tra ---)
+
+• Nuovo GIOCO:  aggiungi una voce in  src/data/games.ts
+  (il campo "name" deve combaciare con il "game" delle guide)
+
+Campi intestazione (frontmatter) di una guida/build:
+    ---
+    title: "Titolo"
+    game: "Genshin Impact"
+    description: "Sottotitolo breve"
+    category: "GUIDA"        (oppure BUILD / NEWS)
+    date: 2026-06-19
+    readingTime: "5 min lettura"
+    thumb: "gt-genshin"      (gt-wuwa / gt-genshin / gt-mha / gt-creator)
+    emoji: "⚔️"
+    ---
+
+
+───────────────────────────────────────────────────────────
+ DATI FTP TOPHOST (compila tu, NON salvarli su GitHub)
+───────────────────────────────────────────────────────────
+
+    Host:     ________________________
+    Username: ________________________
+    Porta:    21
+    (la password tienila nel gestore password, non qui)
