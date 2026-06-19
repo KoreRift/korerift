@@ -1,0 +1,37 @@
+---
+// Layout.astro — struttura base condivisa da tutte le pagine.
+// Carica font, icone e CSS globale, e inserisce Navbar + Footer.
+import "../styles/global.css";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+
+const {
+  title = "KoreRift — Play. Create. Connect.",
+  description = "Guide Gaming rapide, Build pulite, Zero filler. La community italiana di Gaming, Anime e Tech.",
+  current = "home",
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Font (Bangers, Oswald, Nunito) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Oswald:wght@400;600;700&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet" />
+
+    <!-- Icone Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  </head>
+  <body>
+    <Navbar current={current} />
+    <slot />
+    <Footer />
+  </body>
+</html>

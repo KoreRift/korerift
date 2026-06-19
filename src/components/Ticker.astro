@@ -1,0 +1,19 @@
+---
+// Ticker.astro — striscia di testo scorrevole.
+// Props:
+//   items    → array di parole da mostrare
+//   variant  → "" (rosa, default) | "ticker-dark" (nero) | "ticker-yellow" (giallo)
+//   duration → durata animazione in secondi (default 22)
+const { items = [], variant = "", duration = 22 } = Astro.props;
+
+// I contenuti vengono duplicati per ottenere lo scorrimento continuo senza "buchi".
+const loop = [...items, ...items];
+---
+
+<div class={`ticker ${variant}`} aria-hidden="true">
+  <div class="ticker-inner" style={`animation-duration:${duration}s`}>
+    {loop.map((item) => (
+      <span class="ticker-item">{item} &gt;&gt;&gt;</span>
+    ))}
+  </div>
+</div>

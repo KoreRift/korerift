@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KoreRift — Play. Create. Connect.</title>
+  <meta name="description" content="Guide Gaming rapide, Build pulite, Zero filler. La community italiana di Gaming, Anime e Tech." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Oswald:wght@400;600;700&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <style>
+    :root {
+      --pink:   #FF2EB3;
+      --pink2:  #FF79CC;
+      --blue:   #1161FF;
+      --blue2:  #5B9AFF;
+      --cyan:   #00D4C8;
+      --yellow: #FFD600;
+      --black:  #111111;
+      --dark:   #1A1A2E;
+      --grey:   #6B6B80;
+      --lgrey:  #F4F4F8;
+      --border: #E8E8EE;
+      --white:  #FFFFFF;
+      --fn:     'Bangers', cursive;
+      --fh:     'Oswald', sans-serif;
+      --fb:     'Nunito', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--fb); color: var(--black); background: var(--white); overflow-x: hidden; }
+    a { text-decoration: none; color: inherit; }
+
+    ::-webkit-scrollbar       { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--lgrey); }
+    ::-webkit-scrollbar-thumb { background: var(--pink); border-radius: 3px; }
+
+    /* ─── KEYFRAMES ─── */
+    @keyframes float  { 0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-12px) rotate(4deg)} }
+    @keyframes float2 { 0%,100%{transform:translateY(0) rotate(3deg)} 50%{transform:translateY(-9px) rotate(-5deg)} }
+    @keyframes wiggle { 0%,100%{transform:rotate(-5deg)} 50%{transform:rotate(5deg)} }
+    @keyframes pulse  { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.7);opacity:.4} }
+    @keyframes ticker { to{transform:translateX(-50%)} }
+    @keyframes slideUp{ from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)} }
+    @keyframes popIn  { 0%{opacity:0;transform:scale(.85)}70%{transform:scale(1.04)}100%{opacity:1;transform:scale(1)} }
+    @keyframes shimmer{ 0%,100%{background-position:0 50%}50%{background-position:100% 50%} }
+
+    /* ══════════════════════════════════════════
+       NAVBAR
+    ══════════════════════════════════════════ */
+    .navbar {
+      position: sticky; top: 0; z-index: 1000;
+      height: 68px; background: var(--white);
+      border-bottom: 2px solid var(--border);
+      display: flex; align-items: center;
+      padding: 0 2rem; gap: 1.5rem;
+      box-shadow: 0 2px 16px rgba(0,0,0,.06);
+    }
+
+    .nav-logo { display: flex; align-items: center; gap: .5rem; flex-shrink: 0; }
+    .nav-logo-crown { color: var(--pink); font-size: 1.2rem; }
+    .nav-logo-text { font-family: var(--fn); font-size: 2rem; letter-spacing: .04em; line-height: 1; }
+    .nav-logo-text .k { color: var(--black); }
+    .nav-logo-text .r { color: var(--pink); }
+
+    .nav-links { display: flex; gap: 0; list-style: none; flex: 1; }
+    .nav-links a {
+      font-family: var(--fh); font-size: .8rem; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: var(--grey); padding: 0 1rem; height: 68px;
+      display: flex; align-items: center;
+      border-bottom: 3px solid transparent;
+      transition: color .2s, border-color .2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--black); border-bottom-color: var(--pink); }
+
+    .nav-search {
+      display: flex; align-items: center;
+      background: var(--lgrey); border: 1.5px solid var(--border);
+      border-radius: 8px; padding: .4rem .9rem; gap: .5rem;
+      flex: 0 0 220px;
+    }
+    .nav-search input {
+      border: none; background: transparent; font-family: var(--fb);
+      font-size: .82rem; color: var(--black); outline: none; width: 100%;
+    }
+    .nav-search input::placeholder { color: var(--grey); }
+    .nav-search i { color: var(--grey); font-size: .85rem; }
+
+    .nav-right { display: flex; align-items: center; gap: .7rem; flex-shrink: 0; }
+
+    .btn-accedi {
+      font-family: var(--fh); font-size: .8rem; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      padding: .5rem 1.2rem; border-radius: 8px;
+      border: 2px solid var(--black); color: var(--black);
+      background: transparent; cursor: pointer;
+      transition: background .2s, color .2s;
+    }
+    .btn-accedi:hover { background: var(--black); color: var(--white); }
+
+    .btn-iscriviti {
+      font-family: var(--fh); font-size: .8rem; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      padding: .5rem 1.3rem; border-radius: 8px;
+      border: none; background: var(--pink); color: var(--white); cursor: pointer;
+      box-shadow: 0 3px 12px rgba(255,46,179,.35);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .btn-iscriviti:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255,46,179,.5); }
+
+    .nav-kr-badge {
+      width: 36px; height: 36px; border-radius: 8px;
+      background: var(--pink); color: var(--white);
+      font-family: var(--fn); font-size: 1.1rem; letter-spacing: .05em;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    /* hamburger */
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+    .hamburger span { display: block; width: 24px; height: 2.5px; background: var(--black); border-radius: 2px; transition: all .3s; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none; position: fixed; top: 68px; left: 0; right: 0;
+      background: var(--white); z-index: 999; padding: 1.5rem 2rem;
+      border-bottom: 2px solid var(--border);
+      box-shadow: 0 8px 24px rgba(0,0,0,.1);
+    }
+    .mobile-menu.open { display: block; }
+    .mobile-menu ul { list-style: none; display: flex; flex-direction: column; gap: 1rem; }
+    .mobile-menu a { font-family: var(--fh); font-size: 1.2rem; font-weight: 700; text-transform: uppercase; color: var(--dark); }
+    .mobile-menu a:hover { color: var(--pink); }
+
+    /* ══════════════════════════════════════════
+       HERO
+    ══════════════════════════════════════════ */
+    .hero {
+      background: var(--white);
+      min-height: 440px;
+      position: relative; overflow: hidden;
+      display: grid; grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 0 0 0 3.5rem;
+    }
+
+    /* big brush strokes bg */
+    .hero-brush-pink {
+      position: absolute;
+      top: -40px; right: -60px;
+      width: 700px; height: 500px;
+      background: var(--pink);
+      clip-path: polygon(30% 0%, 100% 0%, 100% 100%, 20% 100%, 10% 60%, 25% 30%);
+      opacity: .12; pointer-events: none;
+    }
+    .hero-brush-blue {
+      position: absolute;
+      top: 60px; right: 100px;
+      width: 500px; height: 360px;
+      background: var(--blue);
+      clip-path: polygon(40% 0%, 100% 10%, 90% 100%, 5% 90%, 15% 40%);
+      opacity: .1; pointer-events: none;
+    }
+
+    /* actual brush stroke SVG decorations */
+    .hero-brushes {
+      position: absolute; inset: 0; pointer-events: none;
+    }
+
+    /* halftone right side */
+    .hero-halftone {
+      position: absolute; right: 0; top: 0; bottom: 0; width: 55%;
+      background-image: radial-gradient(circle, rgba(255,46,179,.12) 2px, transparent 2px);
+      background-size: 26px 26px; pointer-events: none;
+    }
+
+    /* left content */
+    .hero-left { position: relative; z-index: 2; padding: 3.5rem 0; }
+
+    .hero-headline {
+      font-family: var(--fn);
+      font-size: clamp(2.8rem, 5vw, 4.8rem);
+      line-height: .97; letter-spacing: .03em;
+      margin-bottom: 1.4rem;
+    }
+    .hero-headline .line-black  { color: var(--black); display: block; }
+    .hero-headline .line-blue   { color: var(--blue);  display: block; }
+    .hero-headline .line-pink   { color: var(--pink);  display: block; }
+
+    .hero-sub {
+      font-size: .95rem; font-weight: 700; color: var(--grey);
+      line-height: 1.65; margin-bottom: 2rem;
+      display: flex; align-items: flex-start; gap: .5rem;
+    }
+    .hero-sub i { color: var(--yellow); flex-shrink: 0; margin-top: .2rem; }
+
+    .hero-btns { display: flex; gap: .9rem; flex-wrap: wrap; }
+
+    .btn-hero-dark {
+      font-family: var(--fh); font-size: .85rem; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      padding: .85rem 1.8rem; border-radius: 10px;
+      background: var(--black); color: var(--white);
+      display: inline-flex; align-items: center; gap: .5rem;
+      transition: transform .2s, box-shadow .2s;
+      box-shadow: 0 4px 16px rgba(0,0,0,.18);
+    }
+    .btn-hero-dark:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.28); }
+
+    .btn-hero-blue {
+      font-family: var(--fh); font-size: .85rem; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      padding: .85rem 1.8rem; border-radius: 10px;
+      background: var(--blue); color: var(--white);
+      display: inline-flex; align-items: center; gap: .5rem;
+      transition: transform .2s, box-shadow .2s;
+      box-shadow: 0 4px 16px rgba(17,97,255,.3);
+    }
+    .btn-hero-blue:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(17,97,255,.45); }
+
+    /* right mascot */
+    .hero-right {
+      position: relative; z-index: 2;
+      height: 460px; display: flex; align-items: flex-end; justify-content: center;
+      overflow: visible;
+    }
+
+    .mascot-area {
+      position: relative; width: 100%; height: 100%;
+      display: flex; align-items: flex-end; justify-content: center;
+    }
+
+    /* Kairo placeholder — styled as anime character silhouette */
+    .kairo-img-wrap {
+      position: relative; z-index: 3;
+      width: 380px; height: 460px;
+      display: flex; align-items: flex-end; justify-content: center;
+    }
+
+    .kairo-placeholder-hero {
+      width: 340px; height: 460px;
+      position: relative;
+    }
+
+    .kairo-real-img {
+      width: 100%; height: 100%;
+      object-fit: contain; object-position: bottom center;
+      display: block; position: relative; z-index: 1;
+      filter: drop-shadow(0 20px 40px rgba(255,46,179,.3));
+      animation: float 4s ease-in-out infinite;
+    }
+
+    /* sticker decorations on hero right */
+    .hero-sticker {
+      position: absolute; z-index: 4;
+      font-family: var(--fn); font-size: .85rem; letter-spacing: .04em;
+      border-radius: 6px; padding: .5rem 1rem;
+      box-shadow: 3px 3px 0 rgba(0,0,0,.15);
+      white-space: nowrap;
+    }
+    .hs-kairo {
+      top: 2.5rem; right: 1rem;
+      background: var(--white);
+      border: 2px solid var(--black);
+      color: var(--black);
+      font-size: 1.4rem;
+      transform: rotate(2deg);
+    }
+    .hs-kairo span { display: block; font-family: var(--fh); font-size: .65rem; font-weight: 700; letter-spacing: .18em; color: var(--grey); text-transform: uppercase; }
+    .hs-goodgame {
+      bottom: 8rem; right: .5rem;
+      background: var(--yellow);
+      color: var(--black);
+      transform: rotate(-6deg);
+      animation: wiggle 4s ease-in-out infinite;
+      font-size: .78rem;
+    }
+    .hs-riftmode {
+      bottom: 4.5rem; right: 2rem;
+      background: var(--pink);
+      color: var(--white);
+      transform: rotate(4deg);
+      animation: wiggle 3.5s 1s ease-in-out infinite;
+      font-size: .75rem;
+    }
+
+    /* star decorations */
+    .hero-star {
+      position: absolute; pointer-events: none; font-size: 1.8rem;
+    }
+
+    .kairo-name-label {
+      position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+      background: var(--black); color: var(--white);
+      font-family: var(--fn); font-size: 1.8rem; letter-spacing: .08em;
+      padding: .3rem 1.4rem; border-radius: 8px; z-index: 5;
+      white-space: nowrap;
+    }
+    .kairo-name-label .kr-pink { color: var(--pink); }
+
+    /* big bg text */
+    .hero-bg-kairo {
+      position: absolute; right: -20px; bottom: 0;
+      font-family: var(--fn); font-size: 14rem; letter-spacing: .06em;
+      color: var(--pink); opacity: .06; pointer-events: none;
+      line-height: 1; z-index: 0;
+    }
+
+    /* ── TICKER ── */
+    .ticker {
+      background: var(--pink); padding: .65rem 0; overflow: hidden;
+    }
+    .ticker-inner {
+      display: flex; width: max-content;
+      animation: ticker 22s linear infinite;
+    }
+    .ticker-item {
+      font-family: var(--fh); font-size: .78rem; font-weight: 700;
+      letter-spacing: .22em; text-transform: uppercase;
+      color: var(--white); padding: 0 1.4rem; white-space: nowrap;
+    }
+
+    /* ══════════════════════════════════════════
+       CARD ROW (content preview)
+    ══════════════════════════════════════════ */
+    .card-row {
+      padding: 2.5rem 2rem;
+      background: var(--lgrey);
+      border-top: 2px solid var(--border);
+      border-bottom: 2px solid var(--border);
+    }
+
+    .card-row-inner {
+      display: grid;
+      grid-template-columns: repeat(4,1fr) 1.1fr;
+      gap: 1rem; max-width: 1400px; margin: 0 auto;
+    }
+
+    .content-card {
+      background: var(--white); border-radius: 14px;
+      border: 1.5px solid var(--border); overflow: hidden;
+      transition: transform .25s cubic-bezier(.34,1.56,.64,1), box-shadow .25s;
+      cursor: pointer; display: flex; flex-direction: column;
+    }
+    .content-card:hover { transform: translateY(-5px); box-shadow: 0 12px 35px rgba(0,0,0,.12); }
+
+    .card-thumb {
+      width: 100%; aspect-ratio: 16/10; position: relative; overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    /* game art placeholder gradients */
+    .gt-wuwa  { background: linear-gradient(135deg, #1a0533 0%, #4a1080 50%, #8833cc 100%); }
+    .gt-genshin{ background: linear-gradient(135deg, #0a2a5e 0%, #1155aa 50%, #66aaff 100%); }
+    .gt-mha   { background: linear-gradient(135deg, #0d3311 0%, #1a6622 50%, #33cc44 100%); }
+    .gt-creator{ background: linear-gradient(135deg, #330a1a 0%, #881133 50%, #ff4488 100%); }
+
+    .card-thumb-art {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 4rem; opacity: .7;
+    }
+    .card-thumb-art img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* halftone overlay on thumb */
+    .card-thumb::after {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: radial-gradient(circle, rgba(255,255,255,.06) 1px, transparent 1px);
+      background-size: 12px 12px;
+      pointer-events: none;
+    }
+
+    .card-badge {
+      position: absolute; top: .7rem; left: .7rem;
+      font-family: var(--fh); font-size: .62rem; font-weight: 700;
+      letter-spacing: .15em; text-transform: uppercase;
+      padding: .28rem .65rem; border-radius: 50px;
+      display: flex; align-items: center; gap: .3rem;
+    }
+    .cb-pink   { background: var(--pink);   color: var(--white); }
+    .cb-blue   { background: var(--blue);   color: var(--white); }
+    .cb-cyan   { background: var(--cyan);   color: var(--black); }
+    .cb-yellow { background: var(--yellow); color: var(--black); }
+
+    .card-icon-badge {
+      position: absolute; top: .6rem; right: .7rem;
+      width: 30px; height: 30px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .85rem;
+    }
+    .ci-pink   { background: var(--pink);   color: var(--white); }
+    .ci-blue   { background: var(--blue);   color: var(--white); }
+    .ci-cyan   { background: var(--cyan);   color: var(--black); }
+    .ci-yellow { background: var(--yellow); color: var(--black); }
+
+    .card-body {
+      padding: 1rem 1rem .9rem; display: flex; flex-direction: column; gap: .4rem; flex: 1;
+    }
+    .card-game {
+      font-family: var(--fh); font-size: .65rem; font-weight: 700;
+      letter-spacing: .18em; text-transform: uppercase; color: var(--grey);
+    }
+    .card-title {
+      font-family: var(--fh); font-size: 1rem; font-weight: 700; line-height: 1.25;
+      color: var(--black);
+    }
+    .card-desc {
+      font-size: .78rem; color: var(--grey); font-weight: 600; line-height: 1.5;
+    }
+    .card-cta {
+      margin-top: auto; padding-top: .7rem;
+    }
+    .card-cta a {
+      font-family: var(--fh); font-size: .72rem; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--black); display: inline-flex; align-items: center; gap: .35rem;
+      padding: .4rem .9rem; border: 2px solid var(--black);
+      border-radius: 6px; transition: background .2s, color .2s;
+    }
+    .card-cta a:hover { background: var(--black); color: var(--white); }
+
+    /* join community card */
+    .join-card {
+      background: var(--dark); border-radius: 14px;
+      border: none; overflow: hidden;
+      display: flex; flex-direction: column;
+      padding: 1.5rem; gap: 1rem;
+      transition: transform .25s cubic-bezier(.34,1.56,.64,1), box-shadow .25s;
+      cursor: default;
+    }
+    .join-card:hover { transform: translateY(-4px); box-shadow: 0 12px 35px rgba(26,26,46,.4); }
+
+    .join-title {
+      font-family: var(--fn); font-size: 1.8rem; letter-spacing: .04em;
+      color: var(--white); line-height: 1;
+    }
+    .join-title .pink { color: var(--pink); }
+
+    .join-socials {
+      display: flex; gap: .6rem; flex-wrap: wrap;
+    }
+    .join-social {
+      width: 40px; height: 40px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; color: var(--white);
+      transition: transform .2s;
+    }
+    .join-social:hover { transform: scale(1.15); }
+    .js-discord { background: #5865F2; }
+    .js-twitch  { background: #9146FF; }
+    .js-youtube { background: #FF0000; }
+    .js-x       { background: #1a1a1a; border: 1px solid rgba(255,255,255,.2); }
+    .js-insta   { background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+
+    .join-sub {
+      font-size: .78rem; color: rgba(255,255,255,.5); font-weight: 600; line-height: 1.5;
+    }
+
+    .btn-join-discord {
+      display: flex; align-items: center; justify-content: center; gap: .5rem;
+      background: var(--pink); color: var(--white);
+      font-family: var(--fh); font-size: .8rem; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase;
+      padding: .75rem 1rem; border-radius: 8px;
+      transition: transform .2s, box-shadow .2s;
+      box-shadow: 0 4px 15px rgba(255,46,179,.35);
+    }
+    .btn-join-discord:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(255,46,179,.5); }
+
+    /* ══════════════════════════════════════════
+       CONTENT SECTIONS (guides + builds + stats)
+    ══════════════════════════════════════════ */
+    .content-section {
+      padding: 3rem 2rem 3.5rem;
+      background: var(--white);
+    }
+    .content-inner {
+      max-width: 1400px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr 360px;
+      gap: 3rem;
+    }
+
+    .col-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 1.4rem;
+    }
+    .col-title {
+      font-family: var(--fh); font-size: 1rem; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase;
+      display: flex; align-items: center; gap: .5rem;
+    }
+    .col-title i { color: var(--pink); }
+    .col-title .blue i { color: var(--blue); }
+
+    .col-vedi-tutte {
+      font-family: var(--fh); font-size: .72rem; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--grey); display: flex; align-items: center; gap: .3rem;
+      transition: color .2s;
+    }
+    .col-vedi-tutte:hover { color: var(--pink); }
+
+    /* list item cards */
+    .list-card {
+      display: flex; gap: 1rem; padding: 1rem;
+      border-radius: 12px; border: 1.5px solid var(--border);
+      background: var(--white); margin-bottom: .9rem;
+      cursor: pointer; transition: border-color .2s, box-shadow .2s;
+      align-items: flex-start;
+    }
+    .list-card:hover { border-color: var(--pink); box-shadow: 0 4px 16px rgba(255,46,179,.1); }
+
+    .list-thumb {
+      width: 76px; height: 56px; border-radius: 8px;
+      flex-shrink: 0; overflow: hidden; position: relative;
+    }
+    .list-thumb-art {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem;
+    }
+
+    .list-info { flex: 1; }
+    .list-tags { display: flex; gap: .4rem; margin-bottom: .35rem; flex-wrap: wrap; }
+    .list-tag {
+      font-family: var(--fh); font-size: .58rem; font-weight: 700;
+      letter-spacing: .15em; text-transform: uppercase;
+      padding: .15rem .5rem; border-radius: 50px;
+    }
+    .lt-game { background: var(--lgrey); color: var(--grey); }
+    .lt-pink { background: rgba(255,46,179,.1); color: var(--pink); }
+    .lt-blue { background: rgba(17,97,255,.1);  color: var(--blue); }
+    .lt-cyan { background: rgba(0,212,200,.12); color: #009990; }
+
+    .list-title {
+      font-family: var(--fb); font-size: .88rem; font-weight: 800;
+      color: var(--black); line-height: 1.3; margin-bottom: .3rem;
+    }
+    .list-meta {
+      font-size: .72rem; color: var(--grey); font-weight: 600;
+      display: flex; align-items: center; gap: .7rem;
+    }
+    .list-meta i { font-size: .65rem; }
+
+    /* stats column */
+    .stats-box {
+      background: var(--dark); border-radius: 16px;
+      padding: 1.8rem; color: var(--white);
+    }
+    .stats-title {
+      font-family: var(--fn); font-size: 1.5rem; letter-spacing: .06em;
+      color: var(--pink); margin-bottom: 1.5rem;
+    }
+    .stats-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+    }
+    .stat-item { text-align: center; }
+    .stat-icon { font-size: 1.6rem; margin-bottom: .4rem; display: block; }
+    .stat-num {
+      font-family: var(--fn); font-size: 1.8rem; letter-spacing: .04em;
+      color: var(--white); display: block; line-height: 1;
+    }
+    .stat-label {
+      font-family: var(--fh); font-size: .68rem; font-weight: 600;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: rgba(255,255,255,.45); display: block; margin-top: .2rem;
+    }
+    .stat-item:nth-child(1) .stat-num { color: var(--pink); }
+    .stat-item:nth-child(2) .stat-num { color: var(--blue2); }
+    .stat-item:nth-child(3) .stat-num { color: var(--yellow); }
+    .stat-item:nth-child(4) .stat-num { color: var(--cyan); }
+
+    .stats-live-box {
+      margin-top: 1.5rem; border-radius: 10px;
+      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
+      padding: 1rem; text-align: center;
+    }
+    .stats-live-dot {
+      width: 8px; height: 8px; border-radius: 50%; background: #ff3333;
+      display: inline-block; margin-right: .4rem;
+      animation: pulse 1.2s ease-in-out infinite;
+    }
+    .stats-live-label {
+      font-family: var(--fh); font-size: .72rem; font-weight: 700;
+      letter-spacing: .18em; text-transform: uppercase; color: #ff3333;
+    }
+    .stats-live-cta {
+      display: block; margin-top: .6rem;
+      font-family: var(--fh); font-size: .78rem; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      background: #9146FF; color: var(--white);
+      padding: .5rem 1rem; border-radius: 7px;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .stats-live-cta:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(145,70,255,.45); }
+
+    /* ══════════════════════════════════════════
+       LIVE SECTION (Twitch embed)
+    ══════════════════════════════════════════ */
+    .live-section {
+      background: var(--lgrey); border-top: 2px solid var(--border);
+      padding: 4rem 2rem; text-align: center;
+    }
+    .live-inner { max-width: 1000px; margin: 0 auto; }
+    .live-pill {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: var(--white); border: 2px solid #ff3333;
+      border-radius: 50px; padding: .35rem 1.1rem;
+      font-family: var(--fh); font-size: .75rem; font-weight: 700;
+      letter-spacing: .2em; color: #ff3333; text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .live-dot { width: 8px; height: 8px; border-radius: 50%; background: #ff3333; animation: pulse 1.2s ease-in-out infinite; }
+    .live-headline {
+      font-family: var(--fn); font-size: clamp(2rem,5vw,3.5rem);
+      color: var(--blue); margin-bottom: .4rem; letter-spacing: .04em;
+    }
+    .live-sub { font-family: var(--fh); font-size: .95rem; font-weight: 600; color: var(--grey); letter-spacing: .05em; margin-bottom: 2rem; }
+    .twitch-embed-box {
+      border-radius: 16px; overflow: hidden;
+      border: 3px solid var(--blue);
+      box-shadow: 0 10px 40px rgba(17,97,255,.18), 0 0 0 6px rgba(17,97,255,.07);
+      aspect-ratio: 16/9; margin-bottom: 1rem;
+    }
+    #twitch-embed, #twitch-embed iframe { width: 100%; height: 100%; border: none; display: block; }
+    .live-note { font-size: .82rem; color: var(--grey); }
+    .live-note a { color: var(--blue); font-weight: 700; }
+
+    /* ── TICKER 2 ── */
+    .ticker-dark { background: var(--black); }
+    .ticker-dark .ticker-item { color: var(--pink); }
+
+    /* ── TICKER 3 ── */
+    .ticker-yellow { background: var(--yellow); }
+    .ticker-yellow .ticker-item { color: var(--black); }
+
+    /* ══════════════════════════════════════════
+       CONTACT + FOOTER
+    ══════════════════════════════════════════ */
+    .contact-strip {
+      background: linear-gradient(135deg, var(--pink) 0%, #cc008f 100%);
+      padding: 4rem 2rem; text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .contact-strip::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: radial-gradient(circle, rgba(255,255,255,.08) 1.5px, transparent 1.5px);
+      background-size: 22px 22px;
+    }
+    .contact-strip-title {
+      font-family: var(--fn); font-size: clamp(2.5rem,6vw,5rem);
+      color: var(--white); letter-spacing: .06em; position: relative; z-index: 1;
+      margin-bottom: .5rem;
+    }
+    .contact-strip-sub {
+      font-family: var(--fh); font-size: .95rem; font-weight: 600;
+      color: rgba(255,255,255,.7); letter-spacing: .06em;
+      margin-bottom: 2rem; position: relative; z-index: 1;
+    }
+    .contact-email-btn {
+      display: inline-flex; align-items: center; gap: .7rem;
+      font-family: var(--fh); font-size: 1.1rem; font-weight: 700;
+      letter-spacing: .06em;
+      background: var(--white); color: var(--pink);
+      padding: 1rem 2.8rem; border-radius: 50px;
+      box-shadow: 0 6px 25px rgba(0,0,0,.2);
+      transition: transform .2s, box-shadow .2s;
+      position: relative; z-index: 1;
+    }
+    .contact-email-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 35px rgba(0,0,0,.3); }
+
+    footer {
+      background: var(--dark); color: rgba(255,255,255,.7);
+      padding: 3rem 2rem 1.5rem; text-align: center;
+    }
+    .footer-logo { font-family: var(--fn); font-size: 2.5rem; letter-spacing: .04em; margin-bottom: .3rem; }
+    .footer-logo .k { color: var(--white); }
+    .footer-logo .r { color: var(--pink); }
+    .footer-tagline {
+      font-family: var(--fh); font-size: .68rem; font-weight: 700;
+      letter-spacing: .28em; text-transform: uppercase;
+      color: rgba(255,255,255,.3); margin-bottom: 1.8rem;
+    }
+    .footer-icons { display: flex; gap: .9rem; justify-content: center; margin-bottom: 2rem; flex-wrap: wrap; }
+    .fi {
+      width: 40px; height: 40px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; border: 1px solid rgba(255,255,255,.12);
+      color: rgba(255,255,255,.45);
+      transition: color .2s, border-color .2s, transform .2s;
+    }
+    .fi:hover { color: var(--pink); border-color: var(--pink); transform: translateY(-3px); }
+    .footer-copy { font-size: .7rem; color: rgba(255,255,255,.2); letter-spacing: .04em; border-top: 1px solid rgba(255,255,255,.07); padding-top: 1.5rem; }
+
+    /* ══════════════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════════════ */
+    @media (max-width: 1200px) {
+      .card-row-inner  { grid-template-columns: repeat(2,1fr) 1fr; }
+      .content-inner   { grid-template-columns: 1fr 1fr; }
+      .content-inner .stats-col { grid-column: 1/-1; }
+      .stats-grid { grid-template-columns: repeat(4,1fr); }
+      .hero { grid-template-columns: 1fr; }
+      .hero-right { display: none; }
+    }
+    @media (max-width: 900px) {
+      .nav-links, .nav-search { display: none; }
+      .hamburger { display: flex; }
+      .nav-right .btn-accedi { display: none; }
+      .card-row-inner { grid-template-columns: 1fr 1fr; }
+      .content-inner { grid-template-columns: 1fr; gap: 2rem; }
+    }
+    @media (max-width: 600px) {
+      .hero { padding: 0 1.5rem; }
+      .card-row-inner { grid-template-columns: 1fr; }
+      .hero-btns { flex-direction: column; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+     NAVBAR
+══════════════════════════════════════════ -->
+<nav class="navbar">
+  <a href="#" class="nav-logo">
+    <span class="nav-logo-crown">👑</span>
+    <span class="nav-logo-text"><span class="k">Kore</span><span class="r">Rift</span></span>
+  </a>
+
+  <ul class="nav-links">
+    <li><a href="#" class="active">Home</a></li>
+    <li><a href="#guide">Guide</a></li>
+    <li><a href="#guide">Build</a></li>
+    <li><a href="#guide">News</a></li>
+    <li><a href="#social">Community</a></li>
+    <li><a href="#about">About</a></li>
+  </ul>
+
+  <div class="nav-search">
+    <i class="fas fa-search"></i>
+    <input type="text" placeholder="Cerca guide, giochi, build…" />
+  </div>
+
+  <div class="nav-right">
+    <a href="#" class="btn-accedi">Accedi</a>
+    <a href="#" class="btn-iscriviti">Iscriviti</a>
+    <div class="nav-kr-badge">👑</div>
+  </div>
+
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <ul>
+    <li><a href="#"          onclick="closeMobile()">Home</a></li>
+    <li><a href="#guide"     onclick="closeMobile()">Guide</a></li>
+    <li><a href="#guide"     onclick="closeMobile()">Build</a></li>
+    <li><a href="#guide"     onclick="closeMobile()">News</a></li>
+    <li><a href="#social"    onclick="closeMobile()">Community</a></li>
+    <li><a href="#about"     onclick="closeMobile()">About</a></li>
+    <li><a href="#contact"   onclick="closeMobile()">Contatti</a></li>
+  </ul>
+</div>
+
+<!-- ══════════════════════════════════════════
+     HERO
+══════════════════════════════════════════ -->
+<section class="hero" id="home">
+
+  <!-- BG decorations -->
+  <div class="hero-brush-pink"></div>
+  <div class="hero-brush-blue"></div>
+  <div class="hero-halftone"></div>
+
+  <!-- SVG brush strokes -->
+  <svg class="hero-brushes" viewBox="0 0 1400 460" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+    <!-- Pink diagonal brush -->
+    <path d="M580 -20 Q800 80 1050 120 Q1250 150 1420 80" stroke="#FF2EB3" stroke-width="90" fill="none" stroke-linecap="round" opacity=".18"/>
+    <!-- Blue brush under -->
+    <path d="M620 200 Q850 160 1100 220 Q1280 260 1420 210" stroke="#1161FF" stroke-width="70" fill="none" stroke-linecap="round" opacity=".15"/>
+    <!-- Pink lower -->
+    <path d="M700 380 Q950 340 1200 400 Q1340 430 1420 390" stroke="#FF2EB3" stroke-width="50" fill="none" stroke-linecap="round" opacity=".12"/>
+  </svg>
+
+  <!-- star deco -->
+  <div class="hero-star" style="top:18%;left:48%;font-size:2.2rem;animation:float 3.5s ease-in-out infinite;color:var(--yellow);filter:drop-shadow(0 2px 6px rgba(255,214,0,.5));">★</div>
+  <div class="hero-star" style="top:30%;left:55%;font-size:1.4rem;animation:float2 4s ease-in-out infinite;color:#ccc;filter:drop-shadow(0 2px 6px rgba(0,0,0,.15));">✦</div>
+  <div class="hero-star" style="bottom:28%;left:50%;font-size:1.8rem;animation:float 5s 1s ease-in-out infinite;color:var(--blue);opacity:.5;">◆</div>
+
+  <!-- LEFT: headline + cta -->
+  <div class="hero-left">
+    <h1 class="hero-headline">
+      <span class="line-black">GUIDE GAMING</span>
+      <span class="line-blue">RAPIDE, BUILD</span>
+      <span class="line-pink">PULITE, ZERO FILLER</span>
+    </h1>
+    <p class="hero-sub">
+      <i class="fas fa-bolt"></i>
+      Guide chiare. Build testate. Community vera.<br>Livella il tuo gameplay con KoreRift.
+    </p>
+    <div class="hero-btns">
+      <a href="#guide" class="btn-hero-dark">Esplora le Guide <i class="fas fa-arrow-right"></i></a>
+      <a href="#guide" class="btn-hero-blue">Scopri le Build 👑</a>
+    </div>
+  </div>
+
+  <!-- RIGHT: mascot + stickers -->
+  <div class="hero-right">
+    <div class="mascot-area">
+
+      <div class="hero-bg-kairo">KR</div>
+
+      <!-- Kairo character -->
+      <div class="kairo-img-wrap">
+        <div class="kairo-placeholder-hero">
+          <img src="kairo.png" alt="Kairo — KoreRift Mascot" class="kairo-real-img" />
+        </div>
+      </div>
+
+      <!-- Kairo label -->
+      <div class="kairo-name-label">KaiiRo <span class="kr-pink">⚡</span></div>
+
+      <!-- stickers around mascot -->
+      <div class="hero-sticker hs-kairo">
+        KaiiRo
+        <span>KORERIFT MASCOT</span>
+      </div>
+
+      <div class="hero-sticker hs-goodgame">
+        GOOD GAME,<br>GOOD VIBES 😊
+      </div>
+
+      <div class="hero-sticker hs-riftmode">
+        ⏻ RIFT MODE: ON
+      </div>
+
+    </div>
+  </div>
+
+</section>
+
+<!-- ── TICKER 1 ── -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-inner">
+    <span class="ticker-item">PLAY &gt;&gt;&gt;</span><span class="ticker-item">CREATE &gt;&gt;&gt;</span><span class="ticker-item">CONNECT &gt;&gt;&gt;</span><span class="ticker-item">ANIME &gt;&gt;&gt;</span><span class="ticker-item">GAMING &gt;&gt;&gt;</span><span class="ticker-item">TECH &gt;&gt;&gt;</span><span class="ticker-item">KORERIFT &gt;&gt;&gt;</span><span class="ticker-item">GUIDE RAPIDE &gt;&gt;&gt;</span><span class="ticker-item">BUILD PULITE &gt;&gt;&gt;</span><span class="ticker-item">ZERO FILLER &gt;&gt;&gt;</span>
+    <span class="ticker-item">PLAY &gt;&gt;&gt;</span><span class="ticker-item">CREATE &gt;&gt;&gt;</span><span class="ticker-item">CONNECT &gt;&gt;&gt;</span><span class="ticker-item">ANIME &gt;&gt;&gt;</span><span class="ticker-item">GAMING &gt;&gt;&gt;</span><span class="ticker-item">TECH &gt;&gt;&gt;</span><span class="ticker-item">KORERIFT &gt;&gt;&gt;</span><span class="ticker-item">GUIDE RAPIDE &gt;&gt;&gt;</span><span class="ticker-item">BUILD PULITE &gt;&gt;&gt;</span><span class="ticker-item">ZERO FILLER &gt;&gt;&gt;</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     CARD ROW
+══════════════════════════════════════════ -->
+<div class="card-row" id="guide">
+  <div class="card-row-inner">
+
+    <!-- Card 1: Guide in evidenza -->
+    <div class="content-card">
+      <div class="card-thumb gt-wuwa">
+        <div class="card-thumb-art">🌊</div>
+        <div class="card-badge cb-pink"><i class="fas fa-bolt"></i> Guide in Evidenza</div>
+        <div class="card-icon-badge ci-pink"><i class="fas fa-bolt"></i></div>
+      </div>
+      <div class="card-body">
+        <span class="card-game">Wuthering Waves</span>
+        <h3 class="card-title">Guida Completa per Principianti</h3>
+        <p class="card-desc">Tutto quello che devi sapere per iniziare.</p>
+        <div class="card-cta"><a href="#">LEGGI ORA <i class="fas fa-arrow-right"></i></a></div>
+      </div>
+    </div>
+
+    <!-- Card 2: Build Consigliate -->
+    <div class="content-card">
+      <div class="card-thumb gt-genshin">
+        <div class="card-thumb-art">⚔️</div>
+        <div class="card-badge cb-blue"><i class="fas fa-crown"></i> Build Consigliate</div>
+        <div class="card-icon-badge ci-blue"><i class="fas fa-crown"></i></div>
+      </div>
+      <div class="card-body">
+        <span class="card-game">Genshin Impact</span>
+        <h3 class="card-title">Migliori Team per Spiral Abyss 4.8</h3>
+        <p class="card-desc">Composizioni ottimali per floor 12.</p>
+        <div class="card-cta"><a href="#">VEDI BUILD <i class="fas fa-arrow-right"></i></a></div>
+      </div>
+    </div>
+
+    <!-- Card 3: News & Update -->
+    <div class="content-card">
+      <div class="card-thumb gt-mha">
+        <div class="card-thumb-art">💥</div>
+        <div class="card-badge cb-cyan"><i class="fas fa-bolt"></i> News &amp; Update</div>
+        <div class="card-icon-badge ci-cyan"><i class="fas fa-bolt"></i></div>
+      </div>
+      <div class="card-body">
+        <span class="card-game">My Hero Academia</span>
+        <h3 class="card-title">The Strongest Hero — Nuovo Evento &amp; Banner</h3>
+        <p class="card-desc">Dettagli sul prossimo banner limited.</p>
+        <div class="card-cta"><a href="#">LEGGI NEWS <i class="fas fa-arrow-right"></i></a></div>
+      </div>
+    </div>
+
+    <!-- Card 4: Creator Spotlight -->
+    <div class="content-card">
+      <div class="card-thumb gt-creator">
+        <div class="card-thumb-art">🌟</div>
+        <div class="card-badge cb-yellow"><i class="fas fa-star"></i> Creator Spotlight</div>
+        <div class="card-icon-badge ci-yellow"><i class="fas fa-star"></i></div>
+      </div>
+      <div class="card-body">
+        <span class="card-game">Creator della settimana</span>
+        <h3 class="card-title">Conosci il Creator Kyuusen</h3>
+        <p class="card-desc">Build, Guide e Gameplay da Top 1%!</p>
+        <div class="card-cta"><a href="#">SCOPRI DI PIÙ <i class="fas fa-arrow-right"></i></a></div>
+      </div>
+    </div>
+
+    <!-- Card 5: Join Community -->
+    <div class="join-card" id="social">
+      <p class="join-title">JOIN THE<br><span class="pink">COMMUNITY!</span> 👑</p>
+      <div class="join-socials">
+        <a href="https://www.tiktok.com/@korerift" target="_blank" rel="noopener" class="join-social js-insta"><i class="fab fa-tiktok"></i></a>
+        <a href="https://www.twitch.tv/korerift"   target="_blank" rel="noopener" class="join-social js-twitch"><i class="fab fa-twitch"></i></a>
+        <a href="https://www.youtube.com/@Korerift" target="_blank" rel="noopener" class="join-social js-youtube"><i class="fab fa-youtube"></i></a>
+        <a href="https://x.com/KoreRift"           target="_blank" rel="noopener" class="join-social js-x"><i class="fab fa-x-twitter"></i></a>
+      </div>
+      <p class="join-sub">Connettiti. Condividi. Livella insieme.</p>
+      <a href="https://www.twitch.tv/korerift" target="_blank" rel="noopener" class="btn-join-discord">
+        <i class="fab fa-twitch"></i> ENTRA SU TWITCH &rarr;
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── TICKER 2 ── -->
+<div class="ticker ticker-dark" aria-hidden="true">
+  <div class="ticker-inner" style="animation-duration:18s">
+    <span class="ticker-item">GAMING NEWS &gt;&gt;&gt;</span><span class="ticker-item">ANIME REVIEW &gt;&gt;&gt;</span><span class="ticker-item">TECH UPDATES &gt;&gt;&gt;</span><span class="ticker-item">TIER LIST &gt;&gt;&gt;</span><span class="ticker-item">MANGA DROP &gt;&gt;&gt;</span><span class="ticker-item">LIVE STREAM &gt;&gt;&gt;</span><span class="ticker-item">COMMUNITY &gt;&gt;&gt;</span><span class="ticker-item">FANDOM &gt;&gt;&gt;</span>
+    <span class="ticker-item">GAMING NEWS &gt;&gt;&gt;</span><span class="ticker-item">ANIME REVIEW &gt;&gt;&gt;</span><span class="ticker-item">TECH UPDATES &gt;&gt;&gt;</span><span class="ticker-item">TIER LIST &gt;&gt;&gt;</span><span class="ticker-item">MANGA DROP &gt;&gt;&gt;</span><span class="ticker-item">LIVE STREAM &gt;&gt;&gt;</span><span class="ticker-item">COMMUNITY &gt;&gt;&gt;</span><span class="ticker-item">FANDOM &gt;&gt;&gt;</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     CONTENT: LATEST GUIDES + BUILDS + STATS
+══════════════════════════════════════════ -->
+<section class="content-section">
+  <div class="content-inner">
+
+    <!-- LATEST GUIDES -->
+    <div>
+      <div class="col-header">
+        <span class="col-title"><i class="fas fa-bolt"></i>&nbsp; Latest Guides</span>
+        <a href="#" class="col-vedi-tutte">VEDI TUTTE <i class="fas fa-arrow-right"></i></a>
+      </div>
+
+      <div class="list-card">
+        <div class="list-thumb gt-wuwa"><div class="list-thumb-art">🌊</div></div>
+        <div class="list-info">
+          <div class="list-tags">
+            <span class="list-tag lt-game">WUTHERING WAVES</span>
+            <span class="list-tag lt-pink">GUIDA</span>
+          </div>
+          <p class="list-title">Wuthering Waves — Tier List Personaggi 1.2</p>
+          <p class="list-meta"><i class="far fa-clock"></i> 2 ore fa &nbsp;·&nbsp; <i class="far fa-book-open"></i> 8 min lettura</p>
+        </div>
+      </div>
+
+      <div class="list-card">
+        <div class="list-thumb gt-genshin"><div class="list-thumb-art">⚔️</div></div>
+        <div class="list-info">
+          <div class="list-tags">
+            <span class="list-tag lt-game">GENSHIN IMPACT</span>
+            <span class="list-tag lt-blue">BUILD</span>
+          </div>
+          <p class="list-title">Neuvillette Hypercarry — Build Ottimale</p>
+          <p class="list-meta"><i class="far fa-clock"></i> 1 giorno fa &nbsp;·&nbsp; <i class="far fa-book-open"></i> 6 min lettura</p>
+        </div>
+      </div>
+
+      <div class="list-card">
+        <div class="list-thumb gt-mha"><div class="list-thumb-art">💥</div></div>
+        <div class="list-info">
+          <div class="list-tags">
+            <span class="list-tag lt-game">MHA STRONGEST HERO</span>
+            <span class="list-tag lt-cyan">NEWS</span>
+          </div>
+          <p class="list-title">Evento Estate 2025 — Guida Completa ai Reward</p>
+          <p class="list-meta"><i class="far fa-clock"></i> 3 giorni fa &nbsp;·&nbsp; <i class="far fa-book-open"></i> 4 min lettura</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- TRENDING BUILDS -->
+    <div>
+      <div class="col-header">
+        <span class="col-title" style="color:var(--blue)"><i class="fas fa-fire" style="color:var(--blue)"></i>&nbsp; Trending Builds</span>
+        <a href="#" class="col-vedi-tutte">VEDI TUTTE <i class="fas fa-arrow-right"></i></a>
+      </div>
+
+      <div class="list-card">
+        <div class="list-thumb gt-genshin"><div class="list-thumb-art">⚔️</div></div>
+        <div class="list-info">
+          <div class="list-tags">
+            <span class="list-tag lt-game">GENSHIN IMPACT</span>
+            <span class="list-tag lt-blue">BUILD</span>
+          </div>
+          <p class="list-title">Arlecchino DPS — Armi e Team per massimizzare i danni</p>
+          <p class="list-meta"><i class="far fa-clock"></i> 1 giorno fa &nbsp;·&nbsp; <i class="far fa-book-open"></i> 6 min lettura</p>
+        </div>
+      </div>
+
+      <div class="list-card">
+        <div class="list-thumb gt-wuwa"><div class="list-thumb-art">🌊</div></div>
+        <div class="list-info">
+          <div class="list-tags">
+            <span class="list-tag lt-game">WUTHERING WAVES</span>
+            <span class="list-tag lt-pink">GUIDA</span>
+          </div>
+          <p class="list-title">Changli Full Build — Migliori Eco Set e Armi 1.2</p>
+          <p class="list-meta"><i class="far fa-clock"></i> 5 ore fa &nbsp;·&nbsp; <i class="far fa-book-open"></i> 7 min lettura</p>
+        </div>
+      </div>
+
+      <div class="list-card">
+        <div class="list-thumb gt-creator"><div class="list-thumb-art">🌟</div></div>
+        <div class="list-info">
+          <div class="list-tags">
+            <span class="list-tag lt-game">HONKAI STAR RAIL</span>
+            <span class="list-tag lt-blue">BUILD</span>
+          </div>
+          <p class="list-title">Feixiao Carry — Speed Tuning e Rotation Guide</p>
+          <p class="list-meta"><i class="far fa-clock"></i> 2 giorni fa &nbsp;·&nbsp; <i class="far fa-book-open"></i> 9 min lettura</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats-col">
+      <div class="stats-box">
+        <p class="stats-title">KORERIFT IN NUMERI 📊</p>
+        <div class="stats-grid">
+          <div class="stat-item">
+            <span class="stat-icon">👥</span>
+            <span class="stat-num">128K+</span>
+            <span class="stat-label">Rifter Attivi</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-icon">📖</span>
+            <span class="stat-num">2.4K+</span>
+            <span class="stat-label">Guide Pubblicate</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-icon">👑</span>
+            <span class="stat-num">9.1M+</span>
+            <span class="stat-label">Visite Mensili</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-icon">⚡</span>
+            <span class="stat-num">92%</span>
+            <span class="stat-label">Community Voto</span>
+          </div>
+        </div>
+
+        <div class="stats-live-box">
+          <span class="stats-live-dot"></span>
+          <span class="stats-live-label">LIVE ORA SU TWITCH</span>
+          <a href="https://www.twitch.tv/korerift" target="_blank" rel="noopener" class="stats-live-cta">
+            <i class="fab fa-twitch"></i> ENTRA NELLA LIVE →
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── TICKER 3 ── -->
+<div class="ticker ticker-yellow" aria-hidden="true">
+  <div class="ticker-inner" style="animation-duration:20s">
+    <span class="ticker-item">FOLLOW US &gt;&gt;&gt;</span><span class="ticker-item">@KORERIFT &gt;&gt;&gt;</span><span class="ticker-item">TIKTOK &gt;&gt;&gt;</span><span class="ticker-item">TWITCH &gt;&gt;&gt;</span><span class="ticker-item">YOUTUBE &gt;&gt;&gt;</span><span class="ticker-item">JOIN THE CREW &gt;&gt;&gt;</span><span class="ticker-item">LEVEL UP &gt;&gt;&gt;</span>
+    <span class="ticker-item">FOLLOW US &gt;&gt;&gt;</span><span class="ticker-item">@KORERIFT &gt;&gt;&gt;</span><span class="ticker-item">TIKTOK &gt;&gt;&gt;</span><span class="ticker-item">TWITCH &gt;&gt;&gt;</span><span class="ticker-item">YOUTUBE &gt;&gt;&gt;</span><span class="ticker-item">JOIN THE CREW &gt;&gt;&gt;</span><span class="ticker-item">LEVEL UP &gt;&gt;&gt;</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     TWITCH LIVE EMBED
+══════════════════════════════════════════ -->
+<section class="live-section" id="live">
+  <div class="live-inner">
+    <div class="live-pill">
+      <span class="live-dot"></span>
+      LIVE ORA SU TWITCH
+    </div>
+    <h2 class="live-headline">🎮 GUARDA LA LIVE</h2>
+    <p class="live-sub">Entra nel rift — la diretta di KoreRift è attiva adesso</p>
+
+    <div class="twitch-embed-box">
+      <div id="twitch-embed"></div>
+    </div>
+
+    <p class="live-note">
+      Guarda la live su <a href="https://www.twitch.tv/korerift" target="_blank" rel="noopener">twitch.tv/korerift</a>
+    </p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     CONTACT STRIP
+══════════════════════════════════════════ -->
+<section class="contact-strip" id="contact">
+  <h2 class="contact-strip-title">SCRIVICI 📩</h2>
+  <p class="contact-strip-sub">Per collaborazioni, press kit, business &amp; crew applications</p>
+  <a href="mailto:info@korerift.com" class="contact-email-btn">
+    <i class="fas fa-envelope"></i>
+    info@korerift.com
+  </a>
+</section>
+
+<!-- ══════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════ -->
+<footer>
+  <div class="footer-logo"><span class="k">Kore</span><span class="r">Rift</span></div>
+  <p class="footer-tagline">STREET ENERGY &nbsp;·&nbsp; ANIME HEART &nbsp;·&nbsp; LIMITLESS POSSIBILITIES</p>
+  <div class="footer-icons">
+    <a href="https://www.tiktok.com/@korerift"  target="_blank" rel="noopener" class="fi"><i class="fab fa-tiktok"></i></a>
+    <a href="https://www.twitch.tv/korerift"    target="_blank" rel="noopener" class="fi"><i class="fab fa-twitch"></i></a>
+    <a href="https://www.youtube.com/@Korerift" target="_blank" rel="noopener" class="fi"><i class="fab fa-youtube"></i></a>
+    <a href="https://x.com/KoreRift"            target="_blank" rel="noopener" class="fi"><i class="fab fa-x-twitter"></i></a>
+    <a href="mailto:info@korerift.com"           class="fi"><i class="fas fa-envelope"></i></a>
+  </div>
+  <p class="footer-copy">© 2025 KORERIFT. ALL RIGHTS RESERVED. — PLAY. CREATE. CONNECT.</p>
+</footer>
+
+<!-- ══════════════════════════════════════════
+     SCRIPTS
+══════════════════════════════════════════ -->
+<script src="https://embed.twitch.tv/embed/v1.js"></script>
+<script>
+  new Twitch.Embed("twitch-embed", {
+    width: "100%", height: "100%",
+    channel: "korerift", layout: "video",
+    autoplay: false, theme: "dark",
+    parent: [window.location.hostname || "localhost"]
+  });
+
+  const hamburger  = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+  });
+  function closeMobile() {
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+  }
+
+  // Scroll reveal
+  const revealItems = document.querySelectorAll('.content-card, .join-card, .list-card, .stats-box');
+  const io = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        e.target.style.animation = `popIn .45s ${(i % 6) * 0.08}s both`;
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  revealItems.forEach(el => { el.style.opacity = '0'; io.observe(el); });
+</script>
+
+</body>
+</html>

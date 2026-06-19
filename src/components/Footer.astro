@@ -1,0 +1,17 @@
+---
+// Footer.astro — piè di pagina presente su ogni pagina.
+const year = new Date().getFullYear();
+---
+
+<footer>
+  <div class="footer-logo"><span class="k">Kore</span><span class="r">Rift</span></div>
+  <p class="footer-tagline">STREET ENERGY &nbsp;·&nbsp; ANIME HEART &nbsp;·&nbsp; LIMITLESS POSSIBILITIES</p>
+  <div class="footer-icons">
+    <a href="https://www.tiktok.com/@korerift"  target="_blank" rel="noopener" class="fi"><i class="fab fa-tiktok"></i></a>
+    <a href="https://www.twitch.tv/korerift"    target="_blank" rel="noopener" class="fi"><i class="fab fa-twitch"></i></a>
+    <a href="https://www.youtube.com/@Korerift" target="_blank" rel="noopener" class="fi"><i class="fab fa-youtube"></i></a>
+    <a href="https://x.com/KoreRift"            target="_blank" rel="noopener" class="fi"><i class="fab fa-x-twitter"></i></a>
+    <a href="mailto:info@korerift.com"          class="fi"><i class="fas fa-envelope"></i></a>
+  </div>
+  <p class="footer-copy">© {year} KORERIFT. ALL RIGHTS RESERVED. — PLAY. CREATE. CONNECT.</p>
+</footer>

@@ -1,0 +1,60 @@
+---
+// Navbar.astro — barra di navigazione in cima a ogni pagina.
+// Prop "current": indica quale link evidenziare (es. "home", "guide"...).
+const { current = "home" } = Astro.props;
+
+const links = [
+  { label: "Home",      href: "/",          key: "home" },
+  { label: "Guide",     href: "/guide",     key: "guide" },
+  { label: "Build",     href: "/build",     key: "build" },
+  { label: "News",      href: "/news",      key: "news" },
+  { label: "Community", href: "/community", key: "community" },
+  { label: "About",     href: "/about",     key: "about" },
+];
+---
+
+<nav class="navbar">
+  <a href="/" class="nav-logo">
+    <span class="nav-logo-crown">👑</span>
+    <span class="nav-logo-text"><span class="k">Kore</span><span class="r">Rift</span></span>
+  </a>
+
+  <ul class="nav-links">
+    {links.map((l) => (
+      <li><a href={l.href} class={current === l.key ? "active" : ""}>{l.label}</a></li>
+    ))}
+  </ul>
+
+  <div class="nav-search">
+    <i class="fas fa-search"></i>
+    <input type="text" placeholder="Cerca guide, giochi, build…" />
+  </div>
+
+  <div class="nav-right">
+    <a href="#" class="btn-accedi">Accedi</a>
+    <a href="#" class="btn-iscriviti">Iscriviti</a>
+    <div class="nav-kr-badge">👑</div>
+  </div>
+
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <ul>
+    {links.map((l) => (
+      <li><a href={l.href}>{l.label}</a></li>
+    ))}
+  </ul>
+</div>
+
+<script>
+  // Apertura/chiusura menu mobile (hamburger)
+  const hamburger = document.getElementById("hamburger");
+  const mobileMenu = document.getElementById("mobileMenu");
+  hamburger?.addEventListener("click", () => {
+    hamburger.classList.toggle("open");
+    mobileMenu?.classList.toggle("open");
+  });
+</script>
