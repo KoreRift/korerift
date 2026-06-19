@@ -8,10 +8,20 @@ export interface Game {
   thumb: string;      // classe gradiente di fallback: gt-genshin/gt-wuwa/gt-mha/gt-creator
   emoji: string;
   tagline: string;
-  image?: string;     // opzionale: es. "/games/genshin.jpg"
+  image?: string;          // opzionale: es. "/games/genshin.jpg"
+  bannerComplete?: boolean; // true se l'immagine contiene già nome/testo/bottone
 }
 
 export const games: Game[] = [
+  {
+    slug: "nte",
+    name: "Neverness To Everness",
+    thumb: "gt-creator",
+    emoji: "🌃",
+    tagline: "Open world anime RPG tra stile urbano, action e mistero.",
+    image: "/games/nte.jpg",
+    bannerComplete: true,
+  },
   {
     slug: "genshin-impact",
     name: "Genshin Impact",

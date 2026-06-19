@@ -156,6 +156,21 @@ I giochi sono elencati in **un solo file**: `src/data/games.ts`.
 Se un gioco **non** ha il campo `image`, il sito usa automaticamente lo sfondo
 colorato (`thumb`). Quindi puoi aggiungere le immagini a poco a poco.
 
+### Banner che contiene GIÀ nome e bottone
+Se la tua immagine include già il nome del gioco e/o il bottone (come il banner NTE),
+aggiungi nel gioco anche:
+
+```ts
+bannerComplete: true,
+```
+
+Così il sito mostra **solo l'immagine**, senza scriverci sopra nome/sottotitolo/bottone
+(che altrimenti farebbero doppione). Se invece l'immagine è "pulita" (solo artwork),
+lascia perdere questa riga: il sito aggiungerà testo e bottone per te.
+
+> 💡 Le immagini molto pesanti (oltre ~500 KB) vanno alleggerite prima di caricarle.
+> Se non sai come fare, chiedimi pure e te le ottimizzo io.
+
 ---
 
 ## 5. Modificare qualcosa di esistente
