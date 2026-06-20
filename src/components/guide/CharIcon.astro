@@ -1,0 +1,13 @@
+---
+// CharIcon.astro — ritratto circolare di un personaggio + nome.
+import { charIcon } from "../../utils/assets";
+const { slug, name, lead = false } = Astro.props;
+const src = charIcon(slug, name);
+---
+
+<div class={`char-icon ${lead ? "char-icon-lead" : ""}`}>
+  <div class="char-icon-img">
+    <img src={src} alt={name} loading="lazy" />
+  </div>
+  <span class="char-icon-name">{name}</span>
+</div>

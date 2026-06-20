@@ -1,0 +1,18 @@
+---
+// BuildItemCard.astro — un elemento del Core Build (arma o modulo).
+import { assetIcon } from "../../utils/assets";
+const { slug, role, name, type, tag, desc, accent = "pink" } = Astro.props;
+const src = assetIcon(slug, type, name);
+---
+
+<div class={`build-item accent-${accent}`}>
+  <div class="build-item-icon">
+    <img src={src} alt={name} loading="lazy" />
+  </div>
+  <div class="build-item-body">
+    <span class="build-item-role">{role}</span>
+    <h4 class="build-item-name">{name}</h4>
+    {tag && <span class="build-item-tag">{tag}</span>}
+    {desc && <p class="build-item-desc">{desc}</p>}
+  </div>
+</div>

@@ -1,0 +1,27 @@
+---
+// StatChip.astro — etichetta di una statistica con icona e colore coerenti.
+const { stat, when } = Astro.props;
+
+// Mappa nome stat -> icona Font Awesome + colore.
+function styleFor(s) {
+  const k = s.toUpperCase();
+  if (k.includes("CRIT DMG") || k.includes("CRIT DAMAGE")) return { icon: "fa-burst",        color: "var(--pink)" };
+  if (k.includes("CRIT"))                                  return { icon: "fa-bullseye",     color: "var(--cyan)" };
+  if (k.includes("COSMOS") || k.includes("ELEM"))          return { icon: "fa-meteor",       color: "#9b5cff" };
+  if (k.includes("ATK") || k.includes("ATTAC"))            return { icon: "fa-hand-fist",    color: "var(--blue)" };
+  if (k.includes("DMG") || k.includes("DAMAGE") || k.includes("DANNO")) return { icon: "fa-fire", color: "#ff7a1a" };
+  if (k.includes("HP") || k.includes("VITA"))              return { icon: "fa-heart",        color: "#ff4d6d" };
+  if (k.includes("DEF"))                                   return { icon: "fa-shield-halved", color: "var(--blue2)" };
+  if (k.includes("CHARGE") || k.includes("RICARIC") || k.includes("ULTIMATE") || k.includes("ENERG")) return { icon: "fa-bolt", color: "var(--yellow)" };
+  return { icon: "fa-star", color: "var(--grey)" };
+}
+const s = styleFor(stat);
+---
+
+<div class="stat-chip">
+  <span class="stat-chip-icon" style={`color:${s.color}`}><i class={`fas ${s.icon}`}></i></span>
+  <span class="stat-chip-text">
+    {when && <span class="stat-chip-when">{when}</span>}
+    <span class="stat-chip-stat">{stat}</span>
+  </span>
+</div>

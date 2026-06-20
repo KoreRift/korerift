@@ -1,6 +1,8 @@
 ---
 import ArticleLayout from "../../layouts/ArticleLayout.astro";
+import BuildGuideLayout from "../../layouts/BuildGuideLayout.astro";
 import { getCollection, render } from "astro:content";
+import { gameSlug } from "../../utils/assets";
 
 // getStaticPaths: dice ad Astro QUALI pagine creare (una per ogni guida).
 export async function getStaticPaths() {
@@ -12,10 +14,19 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props;
-// render() trasforma il Markdown nel componente <Content /> da mostrare.
 const { Content } = await render(entry);
+
+// Le guide "build" usano il template grafico e tornano alla pagina del gioco.
+const isBuild = entry.data.layout === "build";
+const gameHref = `/giochi/${gameSlug(entry.data.game)}`;
 ---
 
-<ArticleLayout data={entry.data} backHref="/guide" backLabel="Tutte le guide" current="guide">
-  <Content />
-</ArticleLayout>
+{isBuild ? (
+  <BuildGuideLayout data={entry.data} backHref={gameHref} backLabel={entry.data.game}>
+    <Content />
+  </BuildGuideLayout>
+) : (
+  <ArticleLayout data={entry.data} backHref="/guide" backLabel="Tutte le guide" current="guide">
+    <Content />
+  </ArticleLayout>
+)}

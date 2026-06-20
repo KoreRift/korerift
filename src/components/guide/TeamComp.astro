@@ -1,0 +1,20 @@
+---
+// TeamComp.astro — una composizione di team consigliata.
+import CharIcon from "./CharIcon.astro";
+const { slug, name, desc, members = [], highlight } = Astro.props;
+---
+
+<div class="team-comp">
+  <div class="team-comp-head">
+    <span class="team-comp-name"><i class="fas fa-shield-halved"></i> {name}</span>
+  </div>
+  {desc && <p class="team-comp-desc">{desc}</p>}
+  <div class="team-comp-members">
+    {members.map((m, i) => (
+      <>
+        <CharIcon slug={slug} name={m} lead={m === highlight} />
+        {i < members.length - 1 && <span class="team-comp-arrow"><i class="fas fa-chevron-right"></i></span>}
+      </>
+    ))}
+  </div>
+</div>

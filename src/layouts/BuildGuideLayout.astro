@@ -1,0 +1,125 @@
+---
+// BuildGuideLayout.astro — template grafico per una guida "build".
+// Trasforma i dati strutturati del frontmatter nella guida impaginata.
+import Layout from "./Layout.astro";
+import BuildItemCard from "../components/guide/BuildItemCard.astro";
+import StatChip from "../components/guide/StatChip.astro";
+import TeamComp from "../components/guide/TeamComp.astro";
+import CharIcon from "../components/guide/CharIcon.astro";
+import { gameSlug, charIcon } from "../utils/assets";
+
+const { data, backHref, backLabel = "Torna al gioco" } = Astro.props;
+const slug = gameSlug(data.game);
+const accents = ["pink", "cyan", "blue"];
+---
+
+<Layout title={`${data.title} — KoreRift`} description={data.description} current="giochi">
+
+  <!-- ─── HEADER ─── -->
+  <header class="bg-hero">
+    <div class="bg-hero-inner">
+      <div class="bg-hero-text">
+        {backHref && <a href={backHref} class="article-back"><i class="fas fa-arrow-left"></i> {backLabel}</a>}
+        <div class="bg-hero-eyebrow">
+          <i class="fas fa-crown"></i> {data.game}
+          {data.version && <span class="bg-hero-ver">v{data.version}</span>}
+        </div>
+        <h1 class="bg-hero-title">{data.title}</h1>
+        <p class="bg-hero-desc">{data.description}</p>
+      </div>
+      {data.character && (
+        <div class="bg-hero-char">
+          <img src={charIcon(slug, data.character)} alt={data.character} />
+        </div>
+      )}
+    </div>
+  </header>
+
+  <div class="bg-wrap">
+
+    <!-- ─── 1. CORE BUILD ─── -->
+    {data.coreBuild && data.coreBuild.length > 0 && (
+      <section class="bg-section">
+        <div class="bg-section-head accent-pink">
+          <span class="bg-num">1</span>
+          <h2 class="bg-section-title">Core Build</h2>
+        </div>
+        <div class="bg-items">
+          {data.coreBuild.map((item, i) => (
+            <BuildItemCard
+              slug={slug}
+              role={item.role}
+              name={item.name}
+              type={item.type}
+              tag={item.tag}
+              desc={item.desc}
+              accent={accents[i % accents.length]}
+            />
+          ))}
+        </div>
+        {data.note && (
+          <p class="bg-note"><i class="fas fa-circle-exclamation"></i> {data.note}</p>
+        )}
+      </section>
+    )}
+
+    <!-- ─── 2. STATS & SKILLS ─── -->
+    {(data.mainStats || data.subStats || data.skillPriority) && (
+      <section class="bg-section">
+        <div class="bg-section-head accent-cyan">
+          <span class="bg-num">2</span>
+          <h2 class="bg-section-title">Stats &amp; Skills</h2>
+        </div>
+
+        <div class="bg-stats-grid">
+          {data.mainStats && (
+            <div class="bg-stats-col">
+              <h3 class="bg-subhead"><i class="fas fa-bullseye"></i> Stat principali</h3>
+              {data.mainStats.map((m) => <StatChip stat={m.stat} when={m.when} />)}
+            </div>
+          )}
+          {data.subStats && (
+            <div class="bg-stats-col">
+              <h3 class="bg-subhead"><i class="fas fa-list"></i> Stat secondarie</h3>
+              {data.subStats.map((s) => <StatChip stat={s} />)}
+            </div>
+          )}
+        </div>
+
+        {data.skillPriority && (
+          <div class="bg-skill">
+            <span class="bg-skill-label"><i class="fas fa-bolt"></i> Priorità Skill</span>
+            <span class="bg-skill-value">{data.skillPriority}</span>
+          </div>
+        )}
+      </section>
+    )}
+
+    <!-- ─── 3. TEAM CONSIGLIATI ─── -->
+    {data.teams && data.teams.length > 0 && (
+      <section class="bg-section">
+        <div class="bg-section-head accent-blue">
+          <span class="bg-num">3</span>
+          <h2 class="bg-section-title">Team Consigliati</h2>
+        </div>
+        <div class="bg-teams">
+          {data.teams.map((t) => (
+            <TeamComp slug={slug} name={t.name} desc={t.desc} members={t.members} highlight={data.character} />
+          ))}
+        </div>
+      </section>
+    )}
+
+    <!-- ─── TIP ─── -->
+    {data.tip && (
+      <div class="bg-tip">
+        <span class="bg-tip-label"><i class="fas fa-star"></i> TIP</span>
+        <span class="bg-tip-text">{data.tip}</span>
+      </div>
+    )}
+
+    <!-- Eventuali note aggiuntive scritte nel corpo del file -->
+    <div class="prose bg-extra"><slot /></div>
+
+  </div>
+</Layout>
