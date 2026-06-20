@@ -1,0 +1,32 @@
+---
+// ListCard.astro — riga orizzontale per le liste "Latest Guides / Trending Builds".
+const { href, thumb = "gt-wuwa", emoji = "🎮", game, category = "GUIDA", title, date, readingTime = "5 min lettura" } = Astro.props;
+
+// Colore dell'etichetta in base alla categoria.
+const tagClass = { GUIDA: "lt-pink", BUILD: "lt-blue", NEWS: "lt-cyan" }[category] ?? "lt-pink";
+
+// Tempo trascorso in italiano (es. "2 ore fa", "ieri", "3 giorni fa").
+function timeAgo(d) {
+  const min = Math.floor((Date.now() - d.getTime()) / 60000);
+  const h = Math.floor(min / 60);
+  const days = Math.floor(h / 24);
+  if (min < 1) return "ora";
+  if (min < 60) return `${min} min fa`;
+  if (h < 24) return `${h} ${h === 1 ? "ora" : "ore"} fa`;
+  if (days === 1) return "ieri";
+  if (days < 30) return `${days} giorni fa`;
+  return d.toLocaleDateString("it-IT", { day: "numeric", month: "short", year: "numeric" });
+}
+---
+
+<a href={href} class="list-card">
+  <div class={`list-thumb ${thumb}`}><div class="list-thumb-art">{emoji}</div></div>
+  <div class="list-info">
+    <div class="list-tags">
+      <span class="list-tag lt-game">{game.toUpperCase()}</span>
+      <span class={`list-tag ${tagClass}`}>{category}</span>
+    </div>
+    <p class="list-title">{title}</p>
+    <p class="list-meta"><i class="far fa-clock"></i> {timeAgo(date)} &nbsp;·&nbsp; <i class="far fa-book-open"></i> {readingTime}</p>
+  </div>
+</a>

@@ -1,6 +1,19 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Ticker from "../components/Ticker.astro";
+import ContentCard from "../components/ContentCard.astro";
+import ListCard from "../components/ListCard.astro";
+import { getCollection } from "astro:content";
+
+// Contenuti dalle collection, ordinati dal più recente.
+const byDateDesc = (a, b) => b.data.date.valueOf() - a.data.date.valueOf();
+const guides = (await getCollection("guide")).sort(byDateDesc);
+const builds = (await getCollection("build")).sort(byDateDesc);
+
+const latestGuides = guides.slice(0, 3);
+const trendingBuilds = builds.slice(0, 3);
+// Card "in evidenza": i 4 contenuti più recenti (guide + build insieme).
+const featured = [...guides, ...builds].sort(byDateDesc).slice(0, 4);
 ---
 
 <Layout current="home">
@@ -66,65 +79,21 @@ import Ticker from "../components/Ticker.astro";
     duration={22}
   />
 
-  <!-- ══════════════ CARD ROW ══════════════ -->
-  <div class="card-row" id="guide">
+  <!-- ══════════════ CARD ROW (contenuti in evidenza, automatici) ══════════════ -->
+  <div class="card-row" id="evidenza">
     <div class="card-row-inner">
 
-      <div class="content-card">
-        <div class="card-thumb gt-wuwa">
-          <div class="card-thumb-art">🌊</div>
-          <div class="card-badge cb-pink"><i class="fas fa-bolt"></i> Guide in Evidenza</div>
-          <div class="card-icon-badge ci-pink"><i class="fas fa-bolt"></i></div>
-        </div>
-        <div class="card-body">
-          <span class="card-game">Wuthering Waves</span>
-          <h3 class="card-title">Guida Completa per Principianti</h3>
-          <p class="card-desc">Tutto quello che devi sapere per iniziare.</p>
-          <div class="card-cta"><a href="/guide">LEGGI ORA <i class="fas fa-arrow-right"></i></a></div>
-        </div>
-      </div>
-
-      <div class="content-card">
-        <div class="card-thumb gt-genshin">
-          <div class="card-thumb-art">⚔️</div>
-          <div class="card-badge cb-blue"><i class="fas fa-crown"></i> Build Consigliate</div>
-          <div class="card-icon-badge ci-blue"><i class="fas fa-crown"></i></div>
-        </div>
-        <div class="card-body">
-          <span class="card-game">Genshin Impact</span>
-          <h3 class="card-title">Migliori Team per Spiral Abyss 4.8</h3>
-          <p class="card-desc">Composizioni ottimali per floor 12.</p>
-          <div class="card-cta"><a href="/build">VEDI BUILD <i class="fas fa-arrow-right"></i></a></div>
-        </div>
-      </div>
-
-      <div class="content-card">
-        <div class="card-thumb gt-mha">
-          <div class="card-thumb-art">💥</div>
-          <div class="card-badge cb-cyan"><i class="fas fa-bolt"></i> News &amp; Update</div>
-          <div class="card-icon-badge ci-cyan"><i class="fas fa-bolt"></i></div>
-        </div>
-        <div class="card-body">
-          <span class="card-game">My Hero Academia</span>
-          <h3 class="card-title">The Strongest Hero — Nuovo Evento &amp; Banner</h3>
-          <p class="card-desc">Dettagli sul prossimo banner limited.</p>
-          <div class="card-cta"><a href="/news">LEGGI NEWS <i class="fas fa-arrow-right"></i></a></div>
-        </div>
-      </div>
-
-      <div class="content-card">
-        <div class="card-thumb gt-creator">
-          <div class="card-thumb-art">🌟</div>
-          <div class="card-badge cb-yellow"><i class="fas fa-star"></i> Creator Spotlight</div>
-          <div class="card-icon-badge ci-yellow"><i class="fas fa-star"></i></div>
-        </div>
-        <div class="card-body">
-          <span class="card-game">Creator della settimana</span>
-          <h3 class="card-title">Conosci il Creator Kyuusen</h3>
-          <p class="card-desc">Build, Guide e Gameplay da Top 1%!</p>
-          <div class="card-cta"><a href="/community">SCOPRI DI PIÙ <i class="fas fa-arrow-right"></i></a></div>
-        </div>
-      </div>
+      {featured.map((e) => (
+        <ContentCard
+          href={`/${e.collection}/${e.id}`}
+          game={e.data.game}
+          title={e.data.title}
+          description={e.data.description}
+          category={e.data.category}
+          thumb={e.data.thumb}
+          emoji={e.data.emoji}
+        />
+      ))}
 
       <div class="join-card" id="social">
         <p class="join-title">JOIN THE<br><span class="pink">COMMUNITY!</span> 👑</p>
@@ -160,41 +129,18 @@ import Ticker from "../components/Ticker.astro";
           <a href="/guide" class="col-vedi-tutte">VEDI TUTTE <i class="fas fa-arrow-right"></i></a>
         </div>
 
-        <div class="list-card">
-          <div class="list-thumb gt-wuwa"><div class="list-thumb-art">🌊</div></div>
-          <div class="list-info">
-            <div class="list-tags">
-              <span class="list-tag lt-game">WUTHERING WAVES</span>
-              <span class="list-tag lt-pink">GUIDA</span>
-            </div>
-            <p class="list-title">Wuthering Waves — Tier List Personaggi 1.2</p>
-            <p class="list-meta"><i class="far fa-clock"></i> 2 ore fa &nbsp;·&nbsp; <i class="far fa-book-open"></i> 8 min lettura</p>
-          </div>
-        </div>
-
-        <div class="list-card">
-          <div class="list-thumb gt-genshin"><div class="list-thumb-art">⚔️</div></div>
-          <div class="list-info">
-            <div class="list-tags">
-              <span class="list-tag lt-game">GENSHIN IMPACT</span>
-              <span class="list-tag lt-blue">BUILD</span>
-            </div>
-            <p class="list-title">Neuvillette Hypercarry — Build Ottimale</p>
-            <p class="list-meta"><i class="far fa-clock"></i> 1 giorno fa &nbsp;·&nbsp; <i class="far fa-book-open"></i> 6 min lettura</p>
-          </div>
-        </div>
-
-        <div class="list-card">
-          <div class="list-thumb gt-mha"><div class="list-thumb-art">💥</div></div>
-          <div class="list-info">
-            <div class="list-tags">
-              <span class="list-tag lt-game">MHA STRONGEST HERO</span>
-              <span class="list-tag lt-cyan">NEWS</span>
-            </div>
-            <p class="list-title">Evento Estate 2025 — Guida Completa ai Reward</p>
-            <p class="list-meta"><i class="far fa-clock"></i> 3 giorni fa &nbsp;·&nbsp; <i class="far fa-book-open"></i> 4 min lettura</p>
-          </div>
-        </div>
+        {latestGuides.length > 0 ? latestGuides.map((g) => (
+          <ListCard
+            href={`/guide/${g.id}`}
+            thumb={g.data.thumb}
+            emoji={g.data.emoji}
+            game={g.data.game}
+            category={g.data.category}
+            title={g.data.title}
+            date={g.data.date}
+            readingTime={g.data.readingTime}
+          />
+        )) : <p class="empty-note" style="padding:1rem 0;text-align:left">Prime guide in arrivo! 👀</p>}
       </div>
 
       <div>
@@ -203,41 +149,18 @@ import Ticker from "../components/Ticker.astro";
           <a href="/build" class="col-vedi-tutte">VEDI TUTTE <i class="fas fa-arrow-right"></i></a>
         </div>
 
-        <div class="list-card">
-          <div class="list-thumb gt-genshin"><div class="list-thumb-art">⚔️</div></div>
-          <div class="list-info">
-            <div class="list-tags">
-              <span class="list-tag lt-game">GENSHIN IMPACT</span>
-              <span class="list-tag lt-blue">BUILD</span>
-            </div>
-            <p class="list-title">Arlecchino DPS — Armi e Team per massimizzare i danni</p>
-            <p class="list-meta"><i class="far fa-clock"></i> 1 giorno fa &nbsp;·&nbsp; <i class="far fa-book-open"></i> 6 min lettura</p>
-          </div>
-        </div>
-
-        <div class="list-card">
-          <div class="list-thumb gt-wuwa"><div class="list-thumb-art">🌊</div></div>
-          <div class="list-info">
-            <div class="list-tags">
-              <span class="list-tag lt-game">WUTHERING WAVES</span>
-              <span class="list-tag lt-pink">GUIDA</span>
-            </div>
-            <p class="list-title">Changli Full Build — Migliori Eco Set e Armi 1.2</p>
-            <p class="list-meta"><i class="far fa-clock"></i> 5 ore fa &nbsp;·&nbsp; <i class="far fa-book-open"></i> 7 min lettura</p>
-          </div>
-        </div>
-
-        <div class="list-card">
-          <div class="list-thumb gt-creator"><div class="list-thumb-art">🌟</div></div>
-          <div class="list-info">
-            <div class="list-tags">
-              <span class="list-tag lt-game">HONKAI STAR RAIL</span>
-              <span class="list-tag lt-blue">BUILD</span>
-            </div>
-            <p class="list-title">Feixiao Carry — Speed Tuning e Rotation Guide</p>
-            <p class="list-meta"><i class="far fa-clock"></i> 2 giorni fa &nbsp;·&nbsp; <i class="far fa-book-open"></i> 9 min lettura</p>
-          </div>
-        </div>
+        {trendingBuilds.length > 0 ? trendingBuilds.map((b) => (
+          <ListCard
+            href={`/build/${b.id}`}
+            thumb={b.data.thumb}
+            emoji={b.data.emoji}
+            game={b.data.game}
+            category={b.data.category}
+            title={b.data.title}
+            date={b.data.date}
+            readingTime={b.data.readingTime}
+          />
+        )) : <p class="empty-note" style="padding:1rem 0;text-align:left">Prime build in arrivo! 👀</p>}
       </div>
 
       <div class="stats-col">
