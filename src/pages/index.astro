@@ -51,24 +51,10 @@ const featured = [...guides, ...builds].sort(byDateDesc).slice(0, 4);
     </div>
 
     <div class="hero-right">
-      <div class="mascot-area">
-        <div class="hero-bg-kairo">KR</div>
-        <div class="kairo-img-wrap">
-          <div class="kairo-placeholder-hero">
-            <img src="/kairo.png" alt="Kairo — KoreRift Mascot" class="kairo-real-img" />
-          </div>
-        </div>
-        <div class="kairo-name-label">KaiiRo <span class="kr-pink">⚡</span></div>
-        <div class="hero-sticker hs-kairo">
-          KaiiRo
-          <span>KORERIFT MASCOT</span>
-        </div>
-        <div class="hero-sticker hs-goodgame">
-          GOOD GAME,<br>GOOD VIBES 😊
-        </div>
-        <div class="hero-sticker hs-riftmode">
-          ⏻ RIFT MODE: ON
-        </div>
+      <div class="hero-live">
+        <div class="live-pill"><span class="live-dot"></span> LIVE ORA SU TWITCH</div>
+        <div class="twitch-embed-box"><div id="twitch-embed"></div></div>
+        <p class="live-note">Guarda su <a href="https://www.twitch.tv/korerift" target="_blank" rel="noopener">twitch.tv/korerift</a></p>
       </div>
     </div>
   </section>
@@ -211,26 +197,6 @@ const featured = [...guides, ...builds].sort(byDateDesc).slice(0, 4);
     duration={20}
     items={["FOLLOW US", "@KORERIFT", "TIKTOK", "TWITCH", "YOUTUBE", "JOIN THE CREW", "LEVEL UP"]}
   />
-
-  <!-- ══════════════ TWITCH LIVE EMBED ══════════════ -->
-  <section class="live-section" id="live">
-    <div class="live-inner">
-      <div class="live-pill">
-        <span class="live-dot"></span>
-        LIVE ORA SU TWITCH
-      </div>
-      <h2 class="live-headline">🎮 GUARDA LA LIVE</h2>
-      <p class="live-sub">Entra nel rift — la diretta di KoreRift è attiva adesso</p>
-
-      <div class="twitch-embed-box">
-        <div id="twitch-embed"></div>
-      </div>
-
-      <p class="live-note">
-        Guarda la live su <a href="https://www.twitch.tv/korerift" target="_blank" rel="noopener">twitch.tv/korerift</a>
-      </p>
-    </div>
-  </section>
 
   <!-- ══════════════ CONTACT STRIP ══════════════ -->
   <section class="contact-strip" id="contact">
