@@ -28,6 +28,7 @@ const guides = (await getCollection("guide")).sort(
         category={g.data.category}
         thumb={g.data.thumb}
         emoji={g.data.emoji}
+        cover={g.data.cover}
       />
     ))}
   </div>

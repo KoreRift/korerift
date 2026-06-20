@@ -13,7 +13,8 @@ const articleSchema = z.object({
   date: z.coerce.date(),                  // data di pubblicazione
   readingTime: z.string().default("5 min lettura"),
   thumb: z.string().default("gt-wuwa"),   // classe gradiente: gt-wuwa/gt-genshin/gt-mha/gt-creator
-  emoji: z.string().default("🎮"),         // emoji mostrata sulla copertina
+  emoji: z.string().default("🎮"),         // emoji mostrata sulla copertina (se non c'è cover)
+  cover: z.string().optional(),           // immagine di copertina della card (es. "/games/nte/cover.jpg")
 
   // ─── Campi opzionali per le guide "build" (layout: "build") ───
   layout: z.enum(["build"]).optional(),   // attiva il template grafico della build

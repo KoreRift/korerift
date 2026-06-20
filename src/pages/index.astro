@@ -92,6 +92,7 @@ const featured = [...guides, ...builds].sort(byDateDesc).slice(0, 4);
           category={e.data.category}
           thumb={e.data.thumb}
           emoji={e.data.emoji}
+          cover={e.data.cover}
         />
       ))}
 
@@ -139,6 +140,7 @@ const featured = [...guides, ...builds].sort(byDateDesc).slice(0, 4);
             title={g.data.title}
             date={g.data.date}
             readingTime={g.data.readingTime}
+            cover={g.data.cover}
           />
         )) : <p class="empty-note" style="padding:1rem 0;text-align:left">Prime guide in arrivo! 👀</p>}
       </div>
@@ -159,6 +161,7 @@ const featured = [...guides, ...builds].sort(byDateDesc).slice(0, 4);
             title={b.data.title}
             date={b.data.date}
             readingTime={b.data.readingTime}
+            cover={b.data.cover}
           />
         )) : <p class="empty-note" style="padding:1rem 0;text-align:left">Prime build in arrivo! 👀</p>}
       </div>

@@ -7,6 +7,7 @@ date: 2026-06-20
 readingTime: "5 min lettura"
 thumb: "gt-creator"
 emoji: "🌃"
+cover: "/games/nte/nte_icon_Zero.png"
 
 layout: "build"
 character: "Zero"

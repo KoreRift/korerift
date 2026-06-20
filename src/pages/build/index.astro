@@ -27,6 +27,7 @@ const builds = (await getCollection("build")).sort(
         category={b.data.category}
         thumb={b.data.thumb}
         emoji={b.data.emoji}
+        cover={b.data.cover}
       />
     ))}
   </div>
