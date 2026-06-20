@@ -175,6 +175,17 @@ tip: "Consiglio finale in evidenza."
 Quindi basta che `name`/`members`/`character` combacino col nome del file
 (gli spazi diventano `_`).
 
+#### Importare gli asset di un gioco (una tantum)
+Tutti gli asset NTE sono già nel progetto. Per un **nuovo gioco** (o nuovi personaggi),
+copia e ottimizza un'intera cartella di immagini con un comando:
+
+```powershell
+npm run asset -- -Source "C:\percorso\della\cartella" -Slug nte
+```
+
+Ridimensiona a 256px mantenendo la **trasparenza PNG** e mette tutto in
+`public/games/<slug>/`. Dopodiché le icone si agganciano da sole.
+
 > 📁 **Dove metto la scheda?** In `src/content/guide/` appare tra le *Guide*;
 > in `src/content/build/` appare tra le *Build*. In entrambi i casi compare anche
 > nella pagina del suo gioco. La build di Zero è in `guide/`.

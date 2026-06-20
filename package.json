@@ -10,6 +10,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "ottimizza": "powershell -ExecutionPolicy Bypass -File scripts/ottimizza-immagini.ps1",
+    "asset": "powershell -ExecutionPolicy Bypass -File scripts/importa-asset.ps1",
     "astro": "astro"
   },
   "dependencies": {
