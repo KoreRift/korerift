@@ -100,14 +100,87 @@ Testo normale. Per il **grassetto** usa due asterischi.
 4. Salva. La guida appare **da sola** in `/guide`, nella home, e nella pagina del
    suo gioco (se il campo `game` combacia). Non devi toccare nient'altro.
 
+### Copertina della card (campo `cover`)
+
+Di default la card di un contenuto mostra lo sfondo colorato (`thumb`) + l'emoji.
+Per metterci un'**immagine vera**, aggiungi nell'intestazione:
+
+```yaml
+cover: "/games/nte/nte_icon_Zero.png"
+```
+
+- Punta a qualsiasi immagine in `public/...` (il percorso parte da `/`, **senza** `public`).
+- Per il risultato migliore usa un'immagine **16:10** (es. 800×500): viene ritagliata
+  a riempimento e allineata in alto.
+- Immagini pesanti → mettile in `public/games/...` e lancia `npm run ottimizza`.
+- Togli la riga `cover:` per tornare allo sfondo colorato + emoji.
+
 ---
 
-## 2. Aggiungere una BUILD
+## 2. Aggiungere una SCHEDA BUILD (come quella di Zero)
 
-Identico alle guide, ma il file va in `src/content/build/`
-e nell'intestazione metti `category: "BUILD"`.
+Le build "ricche" con Core Build, Stats e Team usano un **template grafico**: compili
+solo i dati ordinati nell'intestazione e il sito li impagina con icone e ritratti.
 
-La build apparirà in `/build`, nella home e nella pagina del gioco corrispondente.
+1. Copia `src/content/guide/zero-mc-build.md` e rinominalo (es. `nanally-build.md`).
+2. Cambia i dati. Ecco tutti i campi disponibili:
+
+```yaml
+---
+title: "Nanally — Best Build"
+game: "Neverness To Everness"        # deve combaciare con un gioco in games.ts
+description: "Sottotitolo breve"
+category: "BUILD"
+date: 2026-06-21
+readingTime: "5 min lettura"
+thumb: "gt-creator"
+emoji: "🌃"
+cover: "/games/nte/nte_icon_Nanally.png"
+
+layout: "build"          # ATTIVA il template grafico (senza questa riga = guida normale)
+character: "Nanally"     # personaggio principale (ritratto grande in alto)
+version: "1.0"
+
+coreBuild:               # le voci del Core Build (arma/moduli)
+  - role: "Best Arc"
+    name: "Day Off"       # nome ESATTO (serve a trovare l'icona)
+    type: "weapon"        # "weapon" oppure "module"
+    tag: "BIS + F2P"
+    desc: "Descrizione breve."
+
+mainStats:               # stat principali (con quando usarle)
+  - when: "A3"
+    stat: "CRIT DMG"
+
+subStats: ["CRIT RATE", "CRIT DMG", "ATK %", "DMG %"]
+
+skillPriority: "Skill = Ultimate · Basic Attack = Support Skill"
+
+teams:                   # team consigliati
+  - name: "Blossom Core"
+    desc: "Descrizione del team."
+    members: ["Nanally", "Jiuyuan", "Sakiri", "Zero"]   # nomi ESATTI
+
+note: "Nota finale della sezione Core Build."
+tip: "Consiglio finale in evidenza."
+---
+```
+
+**Le icone si agganciano DA SOLE dal nome**, seguendo la convenzione dei file in
+`public/games/<gioco>/`:
+- Personaggi → `<gioco>_icon_<Nome>.png` &nbsp;(es. `nte_icon_Zero.png`)
+- Armi/Arc → `<gioco>_weapon_<Nome>.png` &nbsp;(es. `nte_weapon_Day_Off.png`)
+- Moduli → `<gioco>_module_<Nome>.png` &nbsp;(es. `nte_module_Lost_Radiance.png`)
+
+Quindi basta che `name`/`members`/`character` combacino col nome del file
+(gli spazi diventano `_`).
+
+> 📁 **Dove metto la scheda?** In `src/content/guide/` appare tra le *Guide*;
+> in `src/content/build/` appare tra le *Build*. In entrambi i casi compare anche
+> nella pagina del suo gioco. La build di Zero è in `guide/`.
+
+> ⚠️ Se un'icona non compare, controlla che il file esista in `public/games/<gioco>/`
+> con il nome esatto (maiuscole comprese).
 
 ---
 
@@ -209,5 +282,8 @@ Dopo ogni modifica: guarda l'anteprima (`npm run dev`), poi salva e pubblica (pu
   esattamente con il `name` in `games.ts`.
 - **L'immagine del banner non si vede** → controlla che il file sia in `public/games/`
   e che il percorso in `image` inizi con `/games/` (senza `public`).
+- **La copertina (`cover`) non si vede** → percorso sbagliato o file mancante: deve
+  iniziare con `/` e il file deve esistere in `public/...`.
+- **Le icone della scheda build non compaiono** → il `name`/`members` non combacia
+  col nome del file in `public/games/<gioco>/` (controlla maiuscole e underscore).
 - **Caratteri strani / accenti** → salva i file in formato UTF-8 (di default lo sono).
-```

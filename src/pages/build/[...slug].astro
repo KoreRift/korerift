@@ -1,6 +1,8 @@
 ---
 import ArticleLayout from "../../layouts/ArticleLayout.astro";
+import BuildGuideLayout from "../../layouts/BuildGuideLayout.astro";
 import { getCollection, render } from "astro:content";
+import { gameSlug } from "../../utils/assets";
 
 export async function getStaticPaths() {
   const builds = await getCollection("build");
@@ -12,8 +14,18 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content } = await render(entry);
+
+// Le build "scheda" (layout: build) usano il template grafico e tornano al gioco.
+const isBuild = entry.data.layout === "build";
+const gameHref = `/giochi/${gameSlug(entry.data.game)}`;
 ---
 
-<ArticleLayout data={entry.data} backHref="/build" backLabel="Tutte le build" current="build">
-  <Content />
-</ArticleLayout>
+{isBuild ? (
+  <BuildGuideLayout data={entry.data} backHref={gameHref} backLabel={entry.data.game}>
+    <Content />
+  </BuildGuideLayout>
+) : (
+  <ArticleLayout data={entry.data} backHref="/build" backLabel="Tutte le build" current="build">
+    <Content />
+  </ArticleLayout>
+)}
