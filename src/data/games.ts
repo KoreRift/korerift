@@ -11,6 +11,7 @@ export interface Game {
   tagline: string;
   image?: string;           // opzionale: es. "/games/nte.jpg"
   bannerComplete?: boolean; // true se l'immagine contiene già nome/testo/bottone
+  assetPrefix?: string;     // prefisso dei file asset se diverso dallo slug (es. "wuwa")
 }
 
 export const games: Game[] = [

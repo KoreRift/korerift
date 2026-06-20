@@ -176,15 +176,39 @@ Quindi basta che `name`/`members`/`character` combacino col nome del file
 (gli spazi diventano `_`).
 
 #### Importare gli asset di un gioco (una tantum)
-Tutti gli asset NTE sono già nel progetto. Per un **nuovo gioco** (o nuovi personaggi),
-copia e ottimizza un'intera cartella di immagini con un comando:
+Tutti gli asset NTE sono già nel progetto. Per un **nuovo gioco** copi e ottimizzi
+un'intera cartella di immagini con un comando:
 
 ```powershell
-npm run asset -- -Source "C:\percorso\della\cartella" -Slug nte
+npm run asset -- -Source "C:\percorso\della\cartella" -Slug <slug-del-gioco>
 ```
 
-Ridimensiona a 256px mantenendo la **trasparenza PNG** e mette tutto in
-`public/games/<slug>/`. Dopodiché le icone si agganciano da sole.
+- `-Source` = la cartella con le immagini (tra virgolette se ha spazi)
+- `-Slug` = lo slug del gioco **esatto** come in `games.ts`
+
+Il comando ridimensiona a 256px mantenendo la **trasparenza PNG**, e mette tutto in
+`public/games/<slug>/` **conservando i nomi originali dei file**.
+
+##### ⚠️ Il prefisso dei file
+Le icone si trovano cercando `<prefisso>_icon_<Nome>.png` (e `_weapon_`, `_module_`).
+Il prefisso, per default, è lo **slug** del gioco. Se i tuoi file usano un prefisso
+diverso, indicalo in `games.ts` con `assetPrefix`.
+
+**Esempio — Wuthering Waves** (slug `wuthering-waves`, file tipo `wuwa_icon_Changli.png`):
+
+```powershell
+npm run asset -- -Source "C:\Users\bened\Desktop\KoreRift\WuWa\WUWA ASSET" -Slug wuthering-waves
+```
+
+Poi in `src/data/games.ts`, sul gioco Wuthering Waves, aggiungi:
+
+```ts
+assetPrefix: "wuwa",
+```
+
+Fatto: ora in una scheda build puoi scrivere `members: ["Changli", ...]` e l'icona
+`wuwa_icon_Changli.png` si aggancia da sola. (Per NTE non serve: slug e prefisso
+coincidono entrambi in `nte`.)
 
 > 📁 **Dove metto la scheda?** In `src/content/guide/` appare tra le *Guide*;
 > in `src/content/build/` appare tra le *Build*. In entrambi i casi compare anche
