@@ -113,7 +113,6 @@ const featured = [...guides, ...builds].sort(byDateDesc).slice(0, 4);
       <div>
         <div class="col-header">
           <span class="col-title"><i class="fas fa-bolt"></i>&nbsp; Latest Guides</span>
-          <a href="/guide" class="col-vedi-tutte">VEDI TUTTE <i class="fas fa-arrow-right"></i></a>
         </div>
 
         {latestGuides.length > 0 ? latestGuides.map((g) => (
@@ -134,7 +133,6 @@ const featured = [...guides, ...builds].sort(byDateDesc).slice(0, 4);
       <div>
         <div class="col-header">
           <span class="col-title" style="color:var(--blue)"><i class="fas fa-fire" style="color:var(--blue)"></i>&nbsp; Trending Builds</span>
-          <a href="/build" class="col-vedi-tutte">VEDI TUTTE <i class="fas fa-arrow-right"></i></a>
         </div>
 
         {trendingBuilds.length > 0 ? trendingBuilds.map((b) => (
