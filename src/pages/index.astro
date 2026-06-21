@@ -3,6 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import Ticker from "../components/Ticker.astro";
 import ContentCard from "../components/ContentCard.astro";
 import ListCard from "../components/ListCard.astro";
+import { stats } from "../data/stats";
 import { getCollection } from "astro:content";
 
 // Contenuti dalle collection, ordinati dal più recente.
@@ -151,26 +152,13 @@ const featured = [...guides, ...builds].sort(byDateDesc).slice(0, 4);
         <div class="stats-box">
           <p class="stats-title">KORERIFT IN NUMERI 📊</p>
           <div class="stats-grid">
-            <div class="stat-item">
-              <span class="stat-icon">👥</span>
-              <span class="stat-num">128K+</span>
-              <span class="stat-label">Rifter Attivi</span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-icon">📖</span>
-              <span class="stat-num">2.4K+</span>
-              <span class="stat-label">Guide Pubblicate</span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-icon">👑</span>
-              <span class="stat-num">9.1M+</span>
-              <span class="stat-label">Visite Mensili</span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-icon">⚡</span>
-              <span class="stat-num">92%</span>
-              <span class="stat-label">Community Voto</span>
-            </div>
+            {stats.map((s) => (
+              <div class="stat-item">
+                <span class="stat-icon" style={`color:${s.color}`}><i class={s.icon}></i></span>
+                <span class="stat-num" style={`color:${s.color}`}>{s.value}</span>
+                <span class="stat-label">{s.label}</span>
+              </div>
+            ))}
           </div>
 
           <div class="stats-live-box">
