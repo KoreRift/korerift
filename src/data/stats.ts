@@ -10,9 +10,9 @@ export interface Stat {
 }
 
 export const stats: Stat[] = [
-  { icon: "fab fa-twitch",    value: "—", label: "Follower Twitch",  color: "#9146FF" },
-  { icon: "fab fa-tiktok",    value: "—", label: "Follower TikTok",  color: "#00D4C8" },
-  { icon: "fas fa-heart",     value: "—", label: "Like TikTok",      color: "#FF2EB3" },
-  { icon: "fab fa-youtube",   value: "—", label: "Iscritti YouTube", color: "#FF3B3B" },
-  { icon: "fab fa-x-twitter", value: "—", label: "Follower X",       color: "#FFFFFF" },
+  { icon: "fab fa-twitch",    value: "320",   label: "Follower Twitch",  color: "#9146FF" },
+  { icon: "fab fa-tiktok",    value: "820",   label: "Follower TikTok",  color: "#00D4C8" },
+  { icon: "fas fa-heart",     value: "27.6K", label: "Like TikTok",      color: "#FF2EB3" },
+  { icon: "fab fa-youtube",   value: "1",     label: "Iscritti YouTube", color: "#FF3B3B" },
+  { icon: "fab fa-x-twitter", value: "1",     label: "Follower X",       color: "#FFFFFF" },
 ];
