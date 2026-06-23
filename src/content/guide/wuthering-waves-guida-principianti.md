@@ -3,6 +3,7 @@ title: "Wuthering Waves — Guida Completa per Principianti"
 game: "Wuthering Waves"
 description: "Tutto quello che devi sapere per iniziare nel modo giusto."
 category: "GUIDA"
+tags: ["Guida", "Principianti"]
 date: 2026-06-18
 readingTime: "8 min lettura"
 thumb: "gt-wuwa"

@@ -3,6 +3,7 @@ title: "Nanally — Best Build"
 game: "Neverness To Everness"
 description: "La build migliore per Nanally: arco, console, statistiche e team consigliato."
 category: "BUILD"
+tags: ["Build"]
 date: 2026-06-23
 readingTime: "5 min lettura"
 thumb: "gt-creator"

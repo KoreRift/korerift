@@ -3,6 +3,7 @@ title: "Zero (MC) — Best Build"
 game: "Neverness To Everness"
 description: "La build migliore per Zero (MC): arma, modulo, statistiche e team consigliati."
 category: "BUILD"
+tags: ["Build"]
 date: 2026-06-20
 readingTime: "5 min lettura"
 thumb: "gt-creator"

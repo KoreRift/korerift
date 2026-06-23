@@ -115,6 +115,20 @@ cover: "/games/nte/nte_icon_Zero.png"
 - Immagini pesanti → mettile in `public/games/...` e lancia `npm run ottimizza`.
 - Togli la riga `cover:` per tornare allo sfondo colorato + emoji.
 
+### Tag e filtri (come trovare le guide quando saranno tante)
+Nella pagina di ogni gioco c'è una barra di **filtri** che nasce **da sola** dai tag
+dei contenuti. Per far comparire un filtro, aggiungi il campo `tags` nell'intestazione:
+
+```yaml
+tags: ["Build"]          # oppure ["Tier List"], ["Guida"], ["Eventi"]...
+```
+
+- Puoi mettere più tag: `tags: ["Build", "Meta"]`
+- I bottoni filtro di un gioco mostrano **solo i tag presenti** in quel gioco.
+  Quindi per NTE/HSR userai es. `Build` / `Tier List`, per GTA es. `Mappe` / `Missioni`,
+  per League es. `Campioni` / `Build` — basta usare i tag che vuoi, i bottoni si creano da soli.
+- Scrivi i tag sempre **uguali** (stesse maiuscole) per non creare doppioni.
+
 ---
 
 ## 2. Aggiungere una SCHEDA BUILD (come quella di Zero)

@@ -16,6 +16,7 @@ const articleSchema = z.object({
   emoji: z.string().default("🎮"),         // emoji mostrata sulla copertina (se non c'è cover)
   cover: z.string().optional(),           // immagine di copertina della card (es. "/games/nte/cover.jpg")
   views: z.number().default(0),           // popolarità manuale: ordina "Top News" (numero più alto = più in alto)
+  tags: z.array(z.string()).default([]),  // etichette per i filtri nella pagina del gioco (es. ["Build"], ["Tier List"])
 
   // ─── Campi opzionali per le guide "build" (layout: "build") ───
   layout: z.enum(["build"]).optional(),   // attiva il template grafico della build

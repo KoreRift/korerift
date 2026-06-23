@@ -795,6 +795,21 @@ footer {
   margin-top: .8rem; max-width: 600px; line-height: 1.6;
 }
 
+/* barra filtri (pagina del gioco) */
+.filter-bar {
+  max-width: 1400px; margin: 0 auto; padding: 1.6rem 2rem 0;
+  display: flex; flex-wrap: wrap; gap: .6rem;
+}
+.filter-chip {
+  font-family: var(--fh); font-size: .74rem; font-weight: 700;
+  letter-spacing: .08em; text-transform: uppercase; cursor: pointer;
+  padding: .5rem 1.1rem; border-radius: 50px;
+  background: var(--white); color: var(--black);
+  border: 1.5px solid var(--border); transition: background .2s, color .2s, border-color .2s;
+}
+.filter-chip:hover { border-color: var(--pink); }
+.filter-chip.active { background: var(--pink); color: var(--paper); border-color: var(--pink); }
+
 /* griglia di card nelle liste */
 .cards-grid {
   max-width: 1400px; margin: 0 auto;

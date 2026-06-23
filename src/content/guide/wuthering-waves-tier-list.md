@@ -3,6 +3,7 @@ title: "Wuthering Waves — Tier List Personaggi 1.2"
 game: "Wuthering Waves"
 description: "Tutti i personaggi classificati: DPS, Support e Healer."
 category: "GUIDA"
+tags: ["Tier List"]
 date: 2026-06-19
 readingTime: "8 min lettura"
 thumb: "gt-wuwa"

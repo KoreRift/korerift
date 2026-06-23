@@ -4,7 +4,6 @@ import ContentCard from "../../components/ContentCard.astro";
 import { getCollection } from "astro:content";
 import { games } from "../../data/games";
 
-// Una pagina per ogni gioco dell'elenco.
 export async function getStaticPaths() {
   return games.map((game) => ({
     params: { slug: game.slug },
@@ -14,12 +13,15 @@ export async function getStaticPaths() {
 
 const { game } = Astro.props;
 
-// Prende guide + build e tiene solo quelle di QUESTO gioco.
+// Guide + build di questo gioco, dalla più recente.
 const guides = await getCollection("guide");
 const builds = await getCollection("build");
 const items = [...guides, ...builds]
   .filter((e) => e.data.game === game.name)
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+// Tag distinti presenti in questo gioco (i bottoni filtro nascono da qui).
+const allTags = [...new Set(items.flatMap((e) => e.data.tags))].sort();
 ---
 
 <Layout title={`${game.name} — KoreRift`} current="giochi">
@@ -33,21 +35,53 @@ const items = [...guides, ...builds]
   </header>
 
   {items.length > 0 ? (
-    <div class="cards-grid">
-      {items.map((e) => (
-        <ContentCard
-          href={`/${e.collection}/${e.id}`}
-          game={e.data.game}
-          title={e.data.title}
-          description={e.data.description}
-          category={e.data.category}
-          thumb={e.data.thumb}
-          emoji={e.data.emoji}
-          cover={e.data.cover}
-        />
-      ))}
-    </div>
+    <>
+      {allTags.length > 0 && (
+        <div class="filter-bar" id="filterBar">
+          <button class="filter-chip active" data-filter="all">Tutto</button>
+          {allTags.map((t) => (
+            <button class="filter-chip" data-filter={t}>{t}</button>
+          ))}
+        </div>
+      )}
+
+      <div class="cards-grid" id="cardsGrid">
+        {items.map((e) => (
+          <ContentCard
+            href={`/${e.collection}/${e.id}`}
+            game={e.data.game}
+            title={e.data.title}
+            description={e.data.description}
+            category={e.data.category}
+            thumb={e.data.thumb}
+            emoji={e.data.emoji}
+            cover={e.data.cover}
+            tags={e.data.tags}
+          />
+        ))}
+      </div>
+    </>
   ) : (
     <p class="empty-note">Ancora nessun contenuto per {game.name}. Sta arrivando! 🚀</p>
   )}
 </Layout>
+
+<script>
+  // Filtro lato browser: mostra/nasconde le card in base al tag selezionato.
+  const bar = document.getElementById("filterBar");
+  if (bar) {
+    const chips = bar.querySelectorAll(".filter-chip");
+    const cards = document.querySelectorAll("#cardsGrid .content-card");
+    bar.addEventListener("click", (ev) => {
+      const btn = (ev.target as HTMLElement).closest(".filter-chip") as HTMLElement | null;
+      if (!btn) return;
+      chips.forEach((c) => c.classList.remove("active"));
+      btn.classList.add("active");
+      const f = btn.dataset.filter;
+      cards.forEach((card) => {
+        const tags = ((card as HTMLElement).dataset.tags || "").split("|");
+        (card as HTMLElement).style.display = (f === "all" || tags.includes(f!)) ? "" : "none";
+      });
+    });
+  }
+</script>

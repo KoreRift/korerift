@@ -3,6 +3,7 @@ title: "Feixiao Carry — Speed Tuning e Rotation Guide"
 game: "Honkai Star Rail"
 description: "Velocità, relics e rotazione per il main carry Wind."
 category: "BUILD"
+tags: ["Build"]
 date: 2026-06-17
 readingTime: "9 min lettura"
 thumb: "gt-creator"
