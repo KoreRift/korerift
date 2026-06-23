@@ -7,7 +7,7 @@ date: 2026-06-23
 readingTime: "5 min lettura"
 thumb: "gt-creator"
 emoji: "🌸"
-cover: "/games/nte/nte_icon_Nanally.png"
+cover: "/games/nte/nanally-cover.jpg"
 
 layout: "build"
 character: "Nanally"
