@@ -721,6 +721,9 @@ footer {
   transition: color .2s, border-color .2s, transform .2s;
 }
 .fi:hover { color: var(--pink); border-color: var(--pink); transform: translateY(-3px); }
+.footer-contact { font-size: .82rem; color: var(--grey); margin-bottom: 1.2rem; }
+.footer-contact a { color: var(--pink); font-weight: 700; }
+.footer-contact a:hover { text-decoration: underline; }
 .footer-copy { font-size: .7rem; color: rgba(255,255,255,.2); letter-spacing: .04em; border-top: 1px solid rgba(255,255,255,.07); padding-top: 1.5rem; }
 
 /* ══════════════════════════════════════════
