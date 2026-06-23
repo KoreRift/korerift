@@ -891,14 +891,14 @@ footer {
 .game-banner-name {
   font-family: var(--fn); font-size: 1.7rem; letter-spacing: .04em;
   color: var(--paper); line-height: 1.05;
-  /* bordo rosa sottile (1px) + rilievo marcato (ombra profonda) */
+  /* bordo nero sottile (1px) + rilievo molto marcato (ombra profonda) */
   text-shadow:
-    1px 0 0 var(--pink), -1px 0 0 var(--pink),
-    0 1px 0 var(--pink), 0 -1px 0 var(--pink),
-    1px 1px 0 var(--pink), -1px -1px 0 var(--pink),
-    1px -1px 0 var(--pink), -1px 1px 0 var(--pink),
-    0 4px 3px rgba(0,0,0,.6),
-    0 9px 18px rgba(0,0,0,.85);
+    1px 0 0 #000, -1px 0 0 #000,
+    0 1px 0 #000, 0 -1px 0 #000,
+    1px 1px 0 #000, -1px -1px 0 #000,
+    1px -1px 0 #000, -1px 1px 0 #000,
+    0 6px 4px rgba(0,0,0,.75),
+    0 14px 26px rgba(0,0,0,.95);
 }
 .game-banner-tagline {
   font-family: var(--fh); font-size: .72rem; font-weight: 600;
