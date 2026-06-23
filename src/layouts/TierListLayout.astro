@@ -1,0 +1,34 @@
+---
+// TierListLayout.astro — template per le tier list (layout: "tierlist").
+import Layout from "./Layout.astro";
+import CharIcon from "../components/guide/CharIcon.astro";
+import { gameSlug } from "../utils/assets";
+
+const { data, backHref, backLabel = "Torna al gioco" } = Astro.props;
+const slug = gameSlug(data.game);
+---
+
+<Layout title={`${data.title} — KoreRift`} description={data.description} current="giochi">
+  <header class="page-hero">
+    <div class="page-hero-inner">
+      {backHref && <a href={backHref} class="article-back"><i class="fas fa-arrow-left"></i> {backLabel}</a>}
+      <div class="page-eyebrow"><i class="fas fa-trophy"></i> {data.game} · Tier List</div>
+      <h1 class="page-title">{data.title}</h1>
+      {data.description && <p class="page-subtitle">{data.description}</p>}
+    </div>
+  </header>
+
+  <div class="tier-list">
+    {data.tiers?.map((tier) => (
+      <div class="tier-row" style={`--tier:${tier.color}`}>
+        <div class="tier-rank">{tier.rank}</div>
+        <div class="tier-chars">
+          {tier.chars.map((c) => <CharIcon slug={slug} name={c} />)}
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <!-- Eventuali note scritte nel corpo del file -->
+  <div class="prose tier-extra"><slot /></div>
+</Layout>

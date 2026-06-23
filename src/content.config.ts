@@ -19,7 +19,7 @@ const articleSchema = z.object({
   tags: z.array(z.string()).default([]),  // etichette per i filtri nella pagina del gioco (es. ["Build"], ["Tier List"])
 
   // ─── Campi opzionali per le guide "build" (layout: "build") ───
-  layout: z.enum(["build"]).optional(),   // attiva il template grafico della build
+  layout: z.enum(["build", "tierlist"]).optional(), // template grafico: build o tier list
   character: z.string().optional(),       // personaggio principale (per il ritratto grande)
   version: z.string().optional(),         // es. "1.0"
   coreBuild: z.array(z.object({
@@ -36,6 +36,11 @@ const articleSchema = z.object({
     name: z.string(),
     desc: z.string().optional(),
     members: z.array(z.string()),         // nomi personaggi (le icone si agganciano da sole)
+  })).optional(),
+  tiers: z.array(z.object({               // per le tier list (layout: "tierlist")
+    rank: z.string(),                     // es. "S", "A", "B"...
+    color: z.string(),                    // colore della fascia (es. "#FF3B3B")
+    chars: z.array(z.string()),           // nomi personaggi della fascia
   })).optional(),
   tip: z.string().optional(),
   note: z.string().optional(),            // nota in fondo alla sezione Core Build

@@ -1,6 +1,7 @@
 ---
 import ArticleLayout from "../../layouts/ArticleLayout.astro";
 import BuildGuideLayout from "../../layouts/BuildGuideLayout.astro";
+import TierListLayout from "../../layouts/TierListLayout.astro";
 import { getCollection, render } from "astro:content";
 import { gameSlug } from "../../utils/assets";
 
@@ -16,15 +17,18 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const { Content } = await render(entry);
 
-// Le guide "build" usano il template grafico e tornano alla pagina del gioco.
-const isBuild = entry.data.layout === "build";
+const layout = entry.data.layout;
 const gameHref = `/giochi/${gameSlug(entry.data.game)}`;
 ---
 
-{isBuild ? (
+{layout === "build" ? (
   <BuildGuideLayout data={entry.data} backHref={gameHref} backLabel={entry.data.game}>
     <Content />
   </BuildGuideLayout>
+) : layout === "tierlist" ? (
+  <TierListLayout data={entry.data} backHref={gameHref} backLabel={entry.data.game}>
+    <Content />
+  </TierListLayout>
 ) : (
   <ArticleLayout data={entry.data} backHref="/guide" backLabel="Tutte le guide" current="guide">
     <Content />
