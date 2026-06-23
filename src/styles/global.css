@@ -891,7 +891,13 @@ footer {
 .game-banner-name {
   font-family: var(--fn); font-size: 1.7rem; letter-spacing: .04em;
   color: var(--paper); line-height: 1.05;
-  text-shadow: 0 2px 8px rgba(0,0,0,.5);
+  /* bordo rosa (colore dei pulsanti) attorno al testo + leggero rilievo */
+  text-shadow:
+    2px 0 0 var(--pink), -2px 0 0 var(--pink),
+    0 2px 0 var(--pink), 0 -2px 0 var(--pink),
+    2px 2px 0 var(--pink), -2px -2px 0 var(--pink),
+    2px -2px 0 var(--pink), -2px 2px 0 var(--pink),
+    0 5px 12px rgba(0,0,0,.55);
 }
 .game-banner-tagline {
   font-family: var(--fh); font-size: .72rem; font-weight: 600;
