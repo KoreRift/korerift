@@ -29,8 +29,13 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body { font-family: var(--fb); color: var(--black); background: var(--bg); overflow-x: hidden; }
+html { scroll-behavior: smooth; scroll-padding-top: 84px; }
+body {
+  font-family: var(--fb); color: var(--black); background: var(--bg);
+  overflow-x: hidden; line-height: 1.6;
+  -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
 a { text-decoration: none; color: inherit; }
 
 ::-webkit-scrollbar       { width: 5px; }

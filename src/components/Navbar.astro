@@ -74,42 +74,46 @@ const searchIndex = [
   </ul>
 </div>
 
-<script>
-  // Apertura/chiusura menu mobile (hamburger)
-  const hamburger = document.getElementById("hamburger");
-  const mobileMenu = document.getElementById("mobileMenu");
-  hamburger?.addEventListener("click", () => {
-    hamburger.classList.toggle("open");
-    mobileMenu?.classList.toggle("open");
-  });
-</script>
+<script type="application/json" id="searchData" is:inline set:html={JSON.stringify(searchIndex)}></script>
 
-<script define:vars={{ searchIndex }}>
-  // Ricerca lato browser: filtra l'indice e mostra i risultati a tendina.
-  const input = document.getElementById("searchInput");
-  const box = document.getElementById("searchResults");
-  if (input && box) {
-    const render = () => {
-      const q = input.value.trim().toLowerCase();
-      if (!q) { box.classList.remove("open"); box.innerHTML = ""; return; }
-      const hits = searchIndex.filter((it) => it.s.includes(q)).slice(0, 8);
-      box.innerHTML = hits.length
-        ? hits.map((m) => `<a href="${m.u}"><span class="sr-kind">${m.k}</span><span class="sr-title">${m.t}</span></a>`).join("")
-        : `<div class="sr-empty">Nessun risultato</div>`;
-      box.classList.add("open");
-    };
-    input.addEventListener("input", render);
-    input.addEventListener("focus", render);
-    input.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") {
-        const first = box.querySelector("a");
-        if (first) window.location.href = first.getAttribute("href");
-      } else if (e.key === "Escape") {
-        box.classList.remove("open");
-      }
-    });
-    document.addEventListener("click", (e) => {
-      if (!e.target.closest(".nav-search")) box.classList.remove("open");
-    });
+<script>
+  // Re-inizializza navbar (menu + ricerca) a ogni caricamento/transizione di pagina.
+  function initNavbar() {
+    const hamburger = document.getElementById("hamburger");
+    const mobileMenu = document.getElementById("mobileMenu");
+    if (hamburger && !hamburger.dataset.bound) {
+      hamburger.dataset.bound = "1";
+      hamburger.addEventListener("click", () => {
+        hamburger.classList.toggle("open");
+        mobileMenu?.classList.toggle("open");
+      });
+    }
+
+    const input = document.getElementById("searchInput") as HTMLInputElement | null;
+    const box = document.getElementById("searchResults");
+    const dataEl = document.getElementById("searchData");
+    if (input && box && dataEl && !input.dataset.bound) {
+      input.dataset.bound = "1";
+      const index = JSON.parse(dataEl.textContent || "[]");
+      const render = () => {
+        const q = input.value.trim().toLowerCase();
+        if (!q) { box.classList.remove("open"); box.innerHTML = ""; return; }
+        const hits = index.filter((it: any) => it.s.includes(q)).slice(0, 8);
+        box.innerHTML = hits.length
+          ? hits.map((m: any) => `<a href="${m.u}"><span class="sr-kind">${m.k}</span><span class="sr-title">${m.t}</span></a>`).join("")
+          : `<div class="sr-empty">Nessun risultato</div>`;
+        box.classList.add("open");
+      };
+      input.addEventListener("input", render);
+      input.addEventListener("focus", render);
+      input.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          const first = box.querySelector("a");
+          if (first) window.location.href = first.getAttribute("href")!;
+        } else if (e.key === "Escape") box.classList.remove("open");
+      });
+      input.addEventListener("blur", () => setTimeout(() => box.classList.remove("open"), 150));
+    }
   }
+  document.addEventListener("astro:page-load", initNavbar);
 </script>

@@ -68,8 +68,10 @@ const allTags = [...new Set(items.flatMap((e) => e.data.tags))].sort();
 
 <script>
   // Filtro lato browser: mostra/nasconde le card in base al tag selezionato.
-  const bar = document.getElementById("filterBar");
-  if (bar) {
+  function initTagFilter() {
+    const bar = document.getElementById("filterBar");
+    if (!bar || bar.dataset.bound) return;
+    bar.dataset.bound = "1";
     const chips = bar.querySelectorAll(".filter-chip");
     const cards = document.querySelectorAll("#cardsGrid .content-card");
     bar.addEventListener("click", (ev) => {
@@ -84,4 +86,5 @@ const allTags = [...new Set(items.flatMap((e) => e.data.tags))].sort();
       });
     });
   }
+  document.addEventListener("astro:page-load", initTagFilter);
 </script>

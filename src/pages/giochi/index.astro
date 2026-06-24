@@ -52,11 +52,13 @@ const sortedGames = [...games].sort((a, b) => latestDate(b.name) - latestDate(a.
 
 <script>
   // Filtro lato browser. "Tutti i giochi" mostra al massimo i 9 più recenti.
-  const MAX_ALL = 9;
-  const bar = document.getElementById("gamesFilter");
-  const grid = document.getElementById("gamesGrid");
-  const empty = document.getElementById("gamesEmpty");
-  if (bar && grid) {
+  function initGamesFilter() {
+    const MAX_ALL = 9;
+    const bar = document.getElementById("gamesFilter");
+    const grid = document.getElementById("gamesGrid");
+    const empty = document.getElementById("gamesEmpty");
+    if (!bar || !grid || bar.dataset.bound) return;
+    bar.dataset.bound = "1";
     const chips = bar.querySelectorAll(".filter-chip");
     const cards = Array.from(grid.querySelectorAll(".game-banner"));
     function apply(f: string) {
@@ -78,4 +80,5 @@ const sortedGames = [...games].sort((a, b) => latestDate(b.name) - latestDate(a.
     });
     apply("all"); // stato iniziale: solo i 9 più recenti
   }
+  document.addEventListener("astro:page-load", initGamesFilter);
 </script>
