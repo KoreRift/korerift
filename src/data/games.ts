@@ -2,6 +2,7 @@
 // "name" DEVE combaciare con il campo "game" nei file Markdown (per il filtro).
 // "image" è opzionale: se metti un banner in public/games/, lo userà al posto del gradiente.
 // "bannerComplete" è opzionale: true SOLO se l'immagine contiene già nome/testo/bottone.
+// "genre" decide in quale filtro appare nella pagina /giochi: "Gacha" | "Moba" | "MMO" | "Altro".
 
 export interface Game {
   slug: string;             // usato nell'URL: /giochi/<slug>
@@ -9,6 +10,7 @@ export interface Game {
   thumb: string;            // classe gradiente di fallback: gt-genshin/gt-wuwa/gt-mha/gt-creator
   emoji: string;
   tagline: string;
+  genre: string;            // filtro pagina /giochi: "Gacha" | "Moba" | "MMO" | "Altro"
   image?: string;           // opzionale: es. "/games/nte.jpg"
   bannerComplete?: boolean; // true se l'immagine contiene già nome/testo/bottone
   assetPrefix?: string;     // prefisso dei file asset se diverso dallo slug (es. "wuwa")
@@ -21,6 +23,7 @@ export const games: Game[] = [
     thumb: "gt-creator",
     emoji: "🌃",
     tagline: "Open world anime RPG tra stile urbano, action e mistero.",
+    genre: "Gacha",
     image: "/games/nte.jpg",
   },
   {
@@ -29,6 +32,7 @@ export const games: Game[] = [
     thumb: "gt-genshin",
     emoji: "🌌",
     tagline: "RPG a turni in viaggio tra le stelle.",
+    genre: "Gacha",
     image: "/games/honkai-star-rail.jpg",
   },
   {
@@ -37,6 +41,7 @@ export const games: Game[] = [
     thumb: "gt-wuwa",
     emoji: "🌊",
     tagline: "Action RPG dinamico e veloce.",
+    genre: "Gacha",
     image: "/games/wuthering-waves.jpg",
   },
   {
@@ -45,6 +50,7 @@ export const games: Game[] = [
     thumb: "gt-mha",
     emoji: "🏙️",
     tagline: "Action urbano, stiloso e frenetico.",
+    genre: "Gacha",
     image: "/games/zenless-zone-zero.jpg",
   },
   {
@@ -53,6 +59,7 @@ export const games: Game[] = [
     thumb: "gt-genshin",
     emoji: "🤖",
     tagline: "Strategy RPG 3D nel mondo di Arknights.",
+    genre: "Gacha",
     image: "/games/arknights-endfield.jpg",
   },
   {
@@ -61,6 +68,7 @@ export const games: Game[] = [
     thumb: "gt-mha",
     emoji: "🌴",
     tagline: "Il ritorno a Vice City. Open world crime.",
+    genre: "Altro",
     image: "/games/gta-vi.jpg",
   },
   {
@@ -69,6 +77,7 @@ export const games: Game[] = [
     thumb: "gt-genshin",
     emoji: "⚔️",
     tagline: "Il MOBA competitivo più giocato al mondo.",
+    genre: "Moba",
     image: "/games/league-of-legends.jpg",
   },
   {
@@ -77,6 +86,7 @@ export const games: Game[] = [
     thumb: "gt-mha",
     emoji: "⚽",
     tagline: "Calcio e tecniche speciali: la leggenda continua.",
+    genre: "Gacha",
     image: "/games/inazuma-eleven-cross.jpg",
   },
   {
@@ -85,6 +95,7 @@ export const games: Game[] = [
     thumb: "gt-creator",
     emoji: "⚡",
     tagline: "Battaglie competitive tra Allenatori.",
+    genre: "Altro",
     image: "/games/pokemon-champions.jpg",
   },
 ];

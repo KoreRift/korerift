@@ -2,6 +2,9 @@
 import Layout from "../../layouts/Layout.astro";
 import GameBanner from "../../components/GameBanner.astro";
 import { games } from "../../data/games";
+
+// Categorie fisse del filtro (mostrate sempre, anche se vuote).
+const categories = ["Gacha", "Moba", "MMO", "Altro"];
 ---
 
 <Layout title="Giochi — KoreRift" current="giochi">
@@ -13,7 +16,14 @@ import { games } from "../../data/games";
     </div>
   </header>
 
-  <div class="games-grid">
+  <div class="filter-bar" id="gamesFilter">
+    <button class="filter-chip active" data-filter="all">Tutti i giochi</button>
+    {categories.map((c) => (
+      <button class="filter-chip" data-filter={c}>{c}</button>
+    ))}
+  </div>
+
+  <div class="games-grid" id="gamesGrid">
     {games.map((g) => (
       <GameBanner
         slug={g.slug}
@@ -23,7 +33,36 @@ import { games } from "../../data/games";
         tagline={g.tagline}
         image={g.image}
         bannerComplete={g.bannerComplete}
+        genre={g.genre}
       />
     ))}
   </div>
+
+  <p class="empty-note" id="gamesEmpty" style="display:none">Nessun gioco in questa categoria, per ora. 🚧</p>
 </Layout>
+
+<script>
+  // Filtro lato browser dei giochi per genere.
+  const bar = document.getElementById("gamesFilter");
+  const grid = document.getElementById("gamesGrid");
+  const empty = document.getElementById("gamesEmpty");
+  if (bar && grid) {
+    const chips = bar.querySelectorAll(".filter-chip");
+    const cards = grid.querySelectorAll(".game-banner");
+    bar.addEventListener("click", (ev) => {
+      const btn = (ev.target as HTMLElement).closest(".filter-chip") as HTMLElement | null;
+      if (!btn) return;
+      chips.forEach((c) => c.classList.remove("active"));
+      btn.classList.add("active");
+      const f = btn.dataset.filter;
+      let visible = 0;
+      cards.forEach((card) => {
+        const el = card as HTMLElement;
+        const show = f === "all" || el.dataset.genre === f;
+        el.style.display = show ? "" : "none";
+        if (show) visible++;
+      });
+      if (empty) (empty as HTMLElement).style.display = visible === 0 ? "" : "none";
+    });
+  }
+</script>
