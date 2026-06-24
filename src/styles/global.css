@@ -354,7 +354,7 @@ a { text-decoration: none; color: inherit; }
 
 .card-row-inner {
   display: grid;
-  grid-template-columns: repeat(4,1fr) 1.1fr;
+  grid-template-columns: repeat(4,1fr);
   gap: 1rem; max-width: 1400px; margin: 0 auto;
 }
 
@@ -730,7 +730,7 @@ footer {
    RESPONSIVE
 ══════════════════════════════════════════ */
 @media (max-width: 1200px) {
-  .card-row-inner  { grid-template-columns: repeat(2,1fr) 1fr; }
+  .card-row-inner  { grid-template-columns: repeat(2,1fr); }
   .content-inner   { grid-template-columns: 1fr 1fr; }
   .content-inner .stats-col { grid-column: 1/-1; }
   .stats-grid { grid-template-columns: repeat(4,1fr); }

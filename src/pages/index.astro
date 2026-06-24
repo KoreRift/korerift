@@ -3,7 +3,6 @@ import Layout from "../layouts/Layout.astro";
 import Ticker from "../components/Ticker.astro";
 import ContentCard from "../components/ContentCard.astro";
 import ListCard from "../components/ListCard.astro";
-import { stats } from "../data/stats";
 import { getCollection } from "astro:content";
 
 // Contenuti dalle collection, ordinati dal più recente.
@@ -80,20 +79,6 @@ const featured = [...guides, ...builds].sort(byDateDesc).slice(0, 4);
         />
       ))}
 
-      <div class="join-card" id="social">
-        <p class="join-title">JOIN THE<br><span class="pink">COMMUNITY!</span> 👑</p>
-        <div class="join-socials">
-          <a href="https://www.tiktok.com/@korerift" target="_blank" rel="noopener" class="join-social js-insta"><i class="fab fa-tiktok"></i></a>
-          <a href="https://www.twitch.tv/korerift"   target="_blank" rel="noopener" class="join-social js-twitch"><i class="fab fa-twitch"></i></a>
-          <a href="https://www.youtube.com/@Korerift" target="_blank" rel="noopener" class="join-social js-youtube"><i class="fab fa-youtube"></i></a>
-          <a href="https://x.com/KoreRift"           target="_blank" rel="noopener" class="join-social js-x"><i class="fab fa-x-twitter"></i></a>
-        </div>
-        <p class="join-sub">Connettiti. Condividi. Livella insieme.</p>
-        <a href="https://www.twitch.tv/korerift" target="_blank" rel="noopener" class="btn-join-discord">
-          <i class="fab fa-twitch"></i> ENTRA SU TWITCH &rarr;
-        </a>
-      </div>
-
     </div>
   </div>
 
@@ -149,25 +134,18 @@ const featured = [...guides, ...builds].sort(byDateDesc).slice(0, 4);
       </div>
 
       <div class="stats-col">
-        <div class="stats-box">
-          <p class="stats-title">KORERIFT IN NUMERI 📊</p>
-          <div class="stats-grid">
-            {stats.map((s) => (
-              <div class="stat-item">
-                <span class="stat-icon" style={`color:${s.color}`}><i class={s.icon}></i></span>
-                <span class="stat-num" style={`color:${s.color}`}>{s.value}</span>
-                <span class="stat-label">{s.label}</span>
-              </div>
-            ))}
+        <div class="join-card" id="social">
+          <p class="join-title">JOIN THE<br><span class="pink">COMMUNITY!</span> 👑</p>
+          <div class="join-socials">
+            <a href="https://www.tiktok.com/@korerift" target="_blank" rel="noopener" class="join-social js-insta"><i class="fab fa-tiktok"></i></a>
+            <a href="https://www.twitch.tv/korerift"   target="_blank" rel="noopener" class="join-social js-twitch"><i class="fab fa-twitch"></i></a>
+            <a href="https://www.youtube.com/@Korerift" target="_blank" rel="noopener" class="join-social js-youtube"><i class="fab fa-youtube"></i></a>
+            <a href="https://x.com/KoreRift"           target="_blank" rel="noopener" class="join-social js-x"><i class="fab fa-x-twitter"></i></a>
           </div>
-
-          <div class="stats-live-box">
-            <span class="stats-live-dot"></span>
-            <span class="stats-live-label">LIVE ORA SU TWITCH</span>
-            <a href="https://www.twitch.tv/korerift" target="_blank" rel="noopener" class="stats-live-cta">
-              <i class="fab fa-twitch"></i> ENTRA NELLA LIVE →
-            </a>
-          </div>
+          <p class="join-sub">Connettiti. Condividi. Livella insieme.</p>
+          <a href="https://www.twitch.tv/korerift" target="_blank" rel="noopener" class="btn-join-discord">
+            <i class="fab fa-twitch"></i> ENTRA SU TWITCH &rarr;
+          </a>
         </div>
       </div>
 
