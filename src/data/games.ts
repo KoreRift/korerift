@@ -3,6 +3,7 @@
 // "image" è opzionale: se metti un banner in public/games/, lo userà al posto del gradiente.
 // "bannerComplete" è opzionale: true SOLO se l'immagine contiene già nome/testo/bottone.
 // "genre" decide in quale filtro appare nella pagina /giochi: "Gacha" | "Moba" | "MMO" | "Altro".
+// "aliases" sono i soprannomi usati dalla ricerca (es. NTE, WuWa).
 
 export interface Game {
   slug: string;             // usato nell'URL: /giochi/<slug>
@@ -14,6 +15,7 @@ export interface Game {
   image?: string;           // opzionale: es. "/games/nte.jpg"
   bannerComplete?: boolean; // true se l'immagine contiene già nome/testo/bottone
   assetPrefix?: string;     // prefisso dei file asset se diverso dallo slug (es. "wuwa")
+  aliases?: string[];       // soprannomi per la ricerca (es. ["NTE"], ["WuWa", "WW"])
 }
 
 export const games: Game[] = [
@@ -25,6 +27,7 @@ export const games: Game[] = [
     tagline: "Open world anime RPG tra stile urbano, action e mistero.",
     genre: "Gacha",
     image: "/games/nte.jpg",
+    aliases: ["NTE"],
   },
   {
     slug: "honkai-star-rail",
@@ -34,6 +37,7 @@ export const games: Game[] = [
     tagline: "RPG a turni in viaggio tra le stelle.",
     genre: "Gacha",
     image: "/games/honkai-star-rail.jpg",
+    aliases: ["HSR", "Honkai"],
   },
   {
     slug: "wuthering-waves",
@@ -43,6 +47,7 @@ export const games: Game[] = [
     tagline: "Action RPG dinamico e veloce.",
     genre: "Gacha",
     image: "/games/wuthering-waves.jpg",
+    aliases: ["WuWa", "WW"],
   },
   {
     slug: "zenless-zone-zero",
@@ -52,6 +57,7 @@ export const games: Game[] = [
     tagline: "Action urbano, stiloso e frenetico.",
     genre: "Gacha",
     image: "/games/zenless-zone-zero.jpg",
+    aliases: ["ZZZ"],
   },
   {
     slug: "arknights-endfield",
@@ -61,6 +67,7 @@ export const games: Game[] = [
     tagline: "Strategy RPG 3D nel mondo di Arknights.",
     genre: "Gacha",
     image: "/games/arknights-endfield.jpg",
+    aliases: ["Endfield", "Arknights"],
   },
   {
     slug: "gta-vi",
@@ -70,6 +77,7 @@ export const games: Game[] = [
     tagline: "Il ritorno a Vice City. Open world crime.",
     genre: "Altro",
     image: "/games/gta-vi.jpg",
+    aliases: ["GTA", "GTA 6", "GTA6"],
   },
   {
     slug: "league-of-legends",
@@ -79,6 +87,7 @@ export const games: Game[] = [
     tagline: "Il MOBA competitivo più giocato al mondo.",
     genre: "Moba",
     image: "/games/league-of-legends.jpg",
+    aliases: ["LoL", "League"],
   },
   {
     slug: "inazuma-eleven-cross",
@@ -88,6 +97,7 @@ export const games: Game[] = [
     tagline: "Calcio e tecniche speciali: la leggenda continua.",
     genre: "Gacha",
     image: "/games/inazuma-eleven-cross.jpg",
+    aliases: ["Inazuma", "IEC"],
   },
   {
     slug: "pokemon-champions",
@@ -97,6 +107,7 @@ export const games: Game[] = [
     tagline: "Battaglie competitive tra Allenatori.",
     genre: "Altro",
     image: "/games/pokemon-champions.jpg",
+    aliases: ["Pokemon", "Pokémon", "Champions"],
   },
 ];
 

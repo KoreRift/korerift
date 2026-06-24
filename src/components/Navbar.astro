@@ -1,6 +1,9 @@
 ---
 // Navbar.astro — barra di navigazione in cima a ogni pagina.
 // Prop "current": indica quale link evidenziare (es. "home", "guide"...).
+import { games } from "../data/games";
+import { getCollection } from "astro:content";
+
 const { current = "home" } = Astro.props;
 
 const links = [
@@ -9,6 +12,28 @@ const links = [
   { label: "News",      href: "/news",      key: "news" },
   { label: "Community", href: "/community", key: "community" },
   { label: "About",     href: "/about",     key: "about" },
+];
+
+// Indice di ricerca: giochi + contenuti. "s" = testo cercabile (nome + alias + gioco).
+const guides = await getCollection("guide");
+const builds = await getCollection("build");
+const aliasBlob = (gameName: string) => {
+  const g = games.find((x) => x.name === gameName);
+  return g ? [g.name, ...(g.aliases ?? [])].join(" ") : gameName;
+};
+const searchIndex = [
+  ...games.map((g) => ({
+    t: g.name,
+    u: `/giochi/${g.slug}`,
+    k: "Gioco",
+    s: [g.name, ...(g.aliases ?? [])].join(" ").toLowerCase(),
+  })),
+  ...[...guides, ...builds].map((e) => ({
+    t: e.data.title,
+    u: `/${e.collection}/${e.id}`,
+    k: e.data.category,
+    s: `${e.data.title} ${aliasBlob(e.data.game)}`.toLowerCase(),
+  })),
 ];
 ---
 
@@ -26,7 +51,8 @@ const links = [
 
   <div class="nav-search">
     <i class="fas fa-search"></i>
-    <input type="text" placeholder="Cerca guide, giochi, build…" />
+    <input type="text" id="searchInput" placeholder="Cerca guide, giochi, build…" autocomplete="off" />
+    <div class="search-results" id="searchResults"></div>
   </div>
 
   <div class="nav-right">
@@ -56,4 +82,34 @@ const links = [
     hamburger.classList.toggle("open");
     mobileMenu?.classList.toggle("open");
   });
+</script>
+
+<script define:vars={{ searchIndex }}>
+  // Ricerca lato browser: filtra l'indice e mostra i risultati a tendina.
+  const input = document.getElementById("searchInput");
+  const box = document.getElementById("searchResults");
+  if (input && box) {
+    const render = () => {
+      const q = input.value.trim().toLowerCase();
+      if (!q) { box.classList.remove("open"); box.innerHTML = ""; return; }
+      const hits = searchIndex.filter((it) => it.s.includes(q)).slice(0, 8);
+      box.innerHTML = hits.length
+        ? hits.map((m) => `<a href="${m.u}"><span class="sr-kind">${m.k}</span><span class="sr-title">${m.t}</span></a>`).join("")
+        : `<div class="sr-empty">Nessun risultato</div>`;
+      box.classList.add("open");
+    };
+    input.addEventListener("input", render);
+    input.addEventListener("focus", render);
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        const first = box.querySelector("a");
+        if (first) window.location.href = first.getAttribute("href");
+      } else if (e.key === "Escape") {
+        box.classList.remove("open");
+      }
+    });
+    document.addEventListener("click", (e) => {
+      if (!e.target.closest(".nav-search")) box.classList.remove("open");
+    });
+  }
 </script>
