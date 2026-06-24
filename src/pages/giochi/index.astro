@@ -2,9 +2,18 @@
 import Layout from "../../layouts/Layout.astro";
 import GameBanner from "../../components/GameBanner.astro";
 import { games } from "../../data/games";
+import { getCollection } from "astro:content";
 
 // Categorie fisse del filtro (mostrate sempre, anche se vuote).
 const categories = ["Gacha", "Moba", "MMO", "Altro"];
+
+// Ordina i giochi per data del contenuto più recente (chi ha la guida/build più nuova va in cima).
+const allContent = [...(await getCollection("guide")), ...(await getCollection("build"))];
+const latestDate = (gameName: string) => {
+  const ds = allContent.filter((e) => e.data.game === gameName).map((e) => e.data.date.valueOf());
+  return ds.length ? Math.max(...ds) : 0;
+};
+const sortedGames = [...games].sort((a, b) => latestDate(b.name) - latestDate(a.name));
 ---
 
 <Layout title="Giochi — KoreRift" current="giochi">
@@ -24,7 +33,7 @@ const categories = ["Gacha", "Moba", "MMO", "Altro"];
   </div>
 
   <div class="games-grid" id="gamesGrid">
-    {games.map((g) => (
+    {sortedGames.map((g) => (
       <GameBanner
         slug={g.slug}
         name={g.name}
@@ -42,27 +51,31 @@ const categories = ["Gacha", "Moba", "MMO", "Altro"];
 </Layout>
 
 <script>
-  // Filtro lato browser dei giochi per genere.
+  // Filtro lato browser. "Tutti i giochi" mostra al massimo i 9 più recenti.
+  const MAX_ALL = 9;
   const bar = document.getElementById("gamesFilter");
   const grid = document.getElementById("gamesGrid");
   const empty = document.getElementById("gamesEmpty");
   if (bar && grid) {
     const chips = bar.querySelectorAll(".filter-chip");
-    const cards = grid.querySelectorAll(".game-banner");
+    const cards = Array.from(grid.querySelectorAll(".game-banner"));
+    function apply(f: string) {
+      let visible = 0;
+      cards.forEach((card, i) => {
+        const el = card as HTMLElement;
+        const show = f === "all" ? i < MAX_ALL : el.dataset.genre === f;
+        el.style.display = show ? "" : "none";
+        if (show) visible++;
+      });
+      if (empty) (empty as HTMLElement).style.display = visible === 0 ? "" : "none";
+    }
     bar.addEventListener("click", (ev) => {
       const btn = (ev.target as HTMLElement).closest(".filter-chip") as HTMLElement | null;
       if (!btn) return;
       chips.forEach((c) => c.classList.remove("active"));
       btn.classList.add("active");
-      const f = btn.dataset.filter;
-      let visible = 0;
-      cards.forEach((card) => {
-        const el = card as HTMLElement;
-        const show = f === "all" || el.dataset.genre === f;
-        el.style.display = show ? "" : "none";
-        if (show) visible++;
-      });
-      if (empty) (empty as HTMLElement).style.display = visible === 0 ? "" : "none";
+      apply(btn.dataset.filter!);
     });
+    apply("all"); // stato iniziale: solo i 9 più recenti
   }
 </script>
