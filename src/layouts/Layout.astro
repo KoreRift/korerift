@@ -1,6 +1,20 @@
 ---
 // Layout.astro — struttura base condivisa da tutte le pagine.
 // Carica font, icone e CSS globale, e inserisce Navbar + Footer.
+// Font self-hosted (niente CDN Google)
+import "@fontsource/bangers";
+import "@fontsource/oswald/400.css";
+import "@fontsource/oswald/600.css";
+import "@fontsource/oswald/700.css";
+import "@fontsource/nunito/600.css";
+import "@fontsource/nunito/700.css";
+import "@fontsource/nunito/800.css";
+import "@fontsource/nunito/900.css";
+// Icone Font Awesome self-hosted (niente CDN)
+import "@fortawesome/fontawesome-free/css/fontawesome.min.css";
+import "@fortawesome/fontawesome-free/css/solid.min.css";
+import "@fortawesome/fontawesome-free/css/regular.min.css";
+import "@fortawesome/fontawesome-free/css/brands.min.css";
 import "../styles/global.css";
 import { ClientRouter } from "astro:transitions";
 import Navbar from "../components/Navbar.astro";
@@ -38,14 +52,6 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
-
-    <!-- Font (Bangers, Oswald, Nunito) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Oswald:wght@400;600;700&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet" />
-
-    <!-- Icone Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
     <!-- Transizioni di pagina fluide -->
     <ClientRouter />

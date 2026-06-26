@@ -529,6 +529,30 @@ a { text-decoration: none; color: inherit; }
   aspect-ratio: 16/9; margin-bottom: 1rem;
 }
 #twitch-embed, #twitch-embed iframe { width: 100%; height: 100%; border: none; display: block; }
+
+/* anteprima live cliccabile (Twitch caricato solo al click) */
+.twitch-ph {
+  position: relative; width: 100%; height: 100%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 1rem; cursor: pointer; color: var(--paper);
+  background: linear-gradient(135deg, #2a1a52 0%, #15102b 100%);
+}
+.twitch-ph::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background-image: radial-gradient(circle, rgba(145,70,255,.14) 1.5px, transparent 1.5px);
+  background-size: 20px 20px;
+}
+.twitch-ph-play {
+  width: 70px; height: 70px; border-radius: 50%; background: #9146FF;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.6rem; padding-left: 5px; position: relative; z-index: 1;
+  box-shadow: 0 8px 24px rgba(145,70,255,.5); transition: transform .2s;
+}
+.twitch-ph:hover .twitch-ph-play { transform: scale(1.1); }
+.twitch-ph-text {
+  font-family: var(--fh); font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  font-size: .85rem; display: flex; align-items: center; gap: .5rem; position: relative; z-index: 1;
+}
 .live-note { font-size: .82rem; color: var(--grey); }
 .live-note a { color: var(--blue); font-weight: 700; }
 
