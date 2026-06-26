@@ -51,8 +51,8 @@ const searchIndex = [
 
   <div class="nav-search">
     <i class="fas fa-search"></i>
-    <input type="text" id="searchInput" placeholder="Cerca guide, giochi, build…" autocomplete="off" />
-    <div class="search-results" id="searchResults"></div>
+    <input type="text" class="search-input" placeholder="Cerca guide, giochi, build…" autocomplete="off" aria-label="Cerca" />
+    <div class="search-results"></div>
   </div>
 
   <div class="nav-right">
@@ -67,6 +67,11 @@ const searchIndex = [
 </nav>
 
 <div class="mobile-menu" id="mobileMenu">
+  <div class="nav-search nav-search--mobile">
+    <i class="fas fa-search"></i>
+    <input type="text" class="search-input" placeholder="Cerca guide, giochi, build…" autocomplete="off" aria-label="Cerca" />
+    <div class="search-results"></div>
+  </div>
   <ul>
     {links.map((l) => (
       <li><a href={l.href}>{l.label}</a></li>
@@ -89,12 +94,13 @@ const searchIndex = [
       });
     }
 
-    const input = document.getElementById("searchInput") as HTMLInputElement | null;
-    const box = document.getElementById("searchResults");
     const dataEl = document.getElementById("searchData");
-    if (input && box && dataEl && !input.dataset.bound) {
+    const index = dataEl ? JSON.parse(dataEl.textContent || "[]") : [];
+    document.querySelectorAll(".nav-search").forEach((boxEl) => {
+      const input = boxEl.querySelector(".search-input") as HTMLInputElement | null;
+      const box = boxEl.querySelector(".search-results") as HTMLElement | null;
+      if (!input || !box || input.dataset.bound) return;
       input.dataset.bound = "1";
-      const index = JSON.parse(dataEl.textContent || "[]");
       const render = () => {
         const q = input.value.trim().toLowerCase();
         if (!q) { box.classList.remove("open"); box.innerHTML = ""; return; }
@@ -113,7 +119,7 @@ const searchIndex = [
         } else if (e.key === "Escape") box.classList.remove("open");
       });
       input.addEventListener("blur", () => setTimeout(() => box.classList.remove("open"), 150));
-    }
+    });
   }
   document.addEventListener("astro:page-load", initNavbar);
 </script>
