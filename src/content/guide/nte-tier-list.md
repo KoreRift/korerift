@@ -14,7 +14,7 @@ layout: "tierlist"
 tiers:
   - rank: "S"
     color: "#FF3B3B"
-    chars: ["Lacrimosa", "Hotori", "Nanally", "Jiuyuan", "Sakiri"]
+    chars: ["Lacrimosa", "Hotori", "Nanally", "Jiuyuan", "Sakiri", "Chaos"]
   - rank: "A"
     color: "#FF8C1A"
     chars: ["Zero", "Chiz", "Daffodill", "Baicang", "Haniel", "Hathor"]
