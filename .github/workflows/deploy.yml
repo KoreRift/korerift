@@ -25,13 +25,12 @@ jobs:
       - name: Costruisci il sito
         run: npm run build
 
-      - name: Carica su TopHost via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftp
-          port: 21
-          local-dir: ./dist/
-          server-dir: ${{ secrets.FTP_SERVER_DIR }}
+      - name: Carica su TopHost via FTP (lftp)
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          FTP_SERVER_DIR: ${{ secrets.FTP_SERVER_DIR }}
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq lftp
+          lftp -c "set cmd:fail-exit yes; set ftp:ssl-allow no; set ftp:passive-mode on; set ftp:prefer-epsv no; set net:max-retries 5; set net:persist-retries 10; set net:timeout 30; set net:reconnect-interval-base 3; open -u '$FTP_USERNAME','$FTP_PASSWORD' '$FTP_SERVER'; mirror -R --no-perms --parallel=1 --verbose ./dist/ '$FTP_SERVER_DIR'"
