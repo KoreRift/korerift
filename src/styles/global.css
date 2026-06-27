@@ -64,7 +64,7 @@ a { text-decoration: none; color: inherit; }
   height: 68px; background: var(--white);
   border-bottom: 2px solid var(--border);
   display: flex; align-items: center;
-  padding: 0 2rem; gap: 1.5rem;
+  padding: 0 max(2rem, calc((100% - 1400px) / 2)); gap: 1.5rem;
   box-shadow: 0 2px 16px rgba(0,0,0,.06);
 }
 
@@ -188,7 +188,7 @@ a { text-decoration: none; color: inherit; }
   position: relative; overflow: hidden;
   display: grid; grid-template-columns: 1fr 1fr;
   align-items: center;
-  padding: 0 0 0 3.5rem;
+  padding: 0 max(2rem, calc((100% - 1400px) / 2));
 }
 
 /* big brush strokes bg */
@@ -523,16 +523,17 @@ a { text-decoration: none; color: inherit; }
 }
 .live-dot { width: 8px; height: 8px; border-radius: 50%; background: #ff3333; animation: pulse 1.2s ease-in-out infinite; }
 .twitch-embed-box {
+  position: relative;
   border-radius: 16px; overflow: hidden;
   border: 3px solid var(--blue);
   box-shadow: 0 10px 40px rgba(17,97,255,.18), 0 0 0 6px rgba(17,97,255,.07);
   aspect-ratio: 16/9; margin-bottom: 1rem;
 }
-#twitch-embed, #twitch-embed iframe { width: 100%; height: 100%; border: none; display: block; }
+#twitch-embed { position: absolute; inset: 0; }
+#twitch-embed iframe { width: 100%; height: 100%; border: none; display: block; }
 
 /* anteprima live cliccabile (Twitch caricato solo al click) */
 .twitch-ph {
-  position: relative; width: 100%; height: 100%;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   gap: 1rem; cursor: pointer; color: var(--paper);
   background: linear-gradient(135deg, #2a1a52 0%, #15102b 100%);
