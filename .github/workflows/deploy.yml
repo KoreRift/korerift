@@ -33,4 +33,9 @@ jobs:
           FTP_SERVER_DIR: ${{ secrets.FTP_SERVER_DIR }}
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq lftp
-          lftp -u "$FTP_USERNAME","$FTP_PASSWORD" "$FTP_SERVER" -e "set cmd:fail-exit yes; set ftp:ssl-allow no; set ftp:passive-mode on; set ftp:prefer-epsv no; set net:max-retries 5; set net:persist-retries 10; set net:timeout 30; set net:reconnect-interval-base 3; mirror -R --no-perms --parallel=1 --verbose ./dist/ \"$FTP_SERVER_DIR\"; bye"
+          # Pulisce l'host (toglie eventuale ftp://, porta, percorso e spazi/a-capo)
+          HOST="$(printf '%s' "$FTP_SERVER" | sed 's#^[a-zA-Z]*://##' | tr -d '[:space:]' | sed 's#/.*##; s/:.*//')"
+          USER="$(printf '%s' "$FTP_USERNAME" | tr -d '\r\n' | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')"
+          DIR="$(printf '%s' "$FTP_SERVER_DIR" | tr -d '\r\n' | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')"
+          echo "Host risolto (lunghezza): ${#HOST} caratteri"
+          lftp -u "$USER","$FTP_PASSWORD" "$HOST" -e "set cmd:fail-exit yes; set ftp:ssl-allow no; set ftp:passive-mode on; set ftp:prefer-epsv no; set net:max-retries 5; set net:persist-retries 10; set net:timeout 30; set net:reconnect-interval-base 3; mirror -R --no-perms --parallel=1 --verbose ./dist/ \"$DIR\"; bye"
