@@ -1,0 +1,182 @@
+# ════════════════════════════════════════════════════════════
+#  KoreRift — Configurazione editor Sveltia CMS
+#  3 tipi di contenuto separati, ognuno con SOLO i campi che servono:
+#   📝 Articolo / Guida   → semplice e veloce (per i collaboratori)
+#   ⚔️  Scheda Build       → campi strutturati (uso avanzato)
+#   🏆 Tier List          → solo le fasce
+# ════════════════════════════════════════════════════════════
+
+backend:
+  name: github
+  repo: KoreRift/korerift        # owner/repo su GitHub
+  branch: main                   # salva qui -> il deploy automatico pubblica
+  # Indirizzo del "portiere" del login (Worker Cloudflare sveltia-cms-auth).
+  base_url: https://sveltia-cms-auth.misty-recipe-9e3f.workers.dev
+
+site_url: https://korerift.com
+display_url: https://korerift.com
+
+# Dove finiscono le immagini caricate dall'editor (copertine + immagini dentro le guide)
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+collections:
+  # ═══════════════ 📝 ARTICOLO / GUIDA ═══════════════
+  - name: "guide"
+    label: "📝 Articolo / Guida"
+    label_singular: "Articolo"
+    description: "Scrivi un articolo o una guida. Semplice: titolo, gioco, testo e immagini."
+    folder: "src/content/guide"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    editor: { preview: false }
+    fields:
+      - { label: "Titolo", name: "title", widget: "string" }
+      - label: "Gioco"
+        name: "game"
+        widget: "select"
+        options:
+          - "Neverness To Everness"
+          - "Honkai Star Rail"
+          - "Wuthering Waves"
+          - "Zenless Zone Zero"
+          - "Arknights: Endfield"
+          - "GTA VI"
+          - "League of Legends"
+          - "Inazuma Eleven Cross"
+          - "Pokemon Champions"
+      - { label: "Sottotitolo (frase breve)", name: "description", widget: "string" }
+      - label: "Categoria"
+        name: "category"
+        widget: "select"
+        options: ["GUIDA", "NEWS"]
+        default: "GUIDA"
+      - { label: "Data", name: "date", widget: "datetime", date_format: "DD/MM/YYYY", time_format: false, format: "YYYY-MM-DD", picker_utc: true }
+      - { label: "Copertina (opzionale)", name: "cover", widget: "image", required: false, choose_url: false, hint: "Immagine della card. Se vuota usa un colore di sfondo." }
+      - { label: "Tag (opzionale)", name: "tags", widget: "list", required: false, hint: "Es: Guida, News, Eventi. Servono per i filtri." }
+      - label: "Testo"
+        name: "body"
+        widget: "markdown"
+        hint: "Scrivi qui. Per le immagini usa il pulsante immagine o trascinale dentro."
+      # — campi automatici (nascosti) —
+      - { label: "Tempo di lettura", name: "readingTime", widget: "hidden", default: "5 min lettura" }
+      - { label: "Emoji", name: "emoji", widget: "hidden", default: "🎮" }
+      - { label: "Colore sfondo", name: "thumb", widget: "hidden", default: "gt-creator" }
+      - { label: "Priorità news", name: "views", widget: "hidden", default: 0 }
+
+  # ═══════════════ ⚔️ SCHEDA BUILD ═══════════════
+  - name: "build"
+    label: "⚔️ Scheda Build"
+    label_singular: "Build"
+    description: "Scheda strutturata di un personaggio (armi, statistiche, team)."
+    folder: "src/content/build"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    editor: { preview: false }
+    fields:
+      - { label: "Titolo", name: "title", widget: "string", hint: "Es: Nanally — Best Build" }
+      - label: "Gioco"
+        name: "game"
+        widget: "select"
+        options:
+          - "Neverness To Everness"
+          - "Honkai Star Rail"
+          - "Wuthering Waves"
+          - "Zenless Zone Zero"
+          - "Arknights: Endfield"
+          - "GTA VI"
+          - "League of Legends"
+          - "Inazuma Eleven Cross"
+          - "Pokemon Champions"
+      - { label: "Sottotitolo (frase breve)", name: "description", widget: "string" }
+      - { label: "Personaggio", name: "character", widget: "string", hint: "Nome esatto (per il ritratto e le icone)." }
+      - { label: "Versione del gioco", name: "version", widget: "string", required: false }
+      - { label: "Data", name: "date", widget: "datetime", date_format: "DD/MM/YYYY", time_format: false, format: "YYYY-MM-DD", picker_utc: true }
+      - { label: "Copertina (opzionale)", name: "cover", widget: "image", required: false, choose_url: false }
+      - label: "Core Build (armi / moduli)"
+        name: "coreBuild"
+        widget: "list"
+        required: false
+        fields:
+          - { label: "Ruolo", name: "role", widget: "string", hint: "Es: Best Arc" }
+          - { label: "Nome", name: "name", widget: "string" }
+          - { label: "Tipo", name: "type", widget: "select", options: ["weapon", "module"] }
+          - { label: "Etichetta", name: "tag", widget: "string", required: false, hint: "Es: BIS + F2P" }
+          - { label: "Descrizione", name: "desc", widget: "string", required: false }
+      - label: "Statistiche principali"
+        name: "mainStats"
+        widget: "list"
+        required: false
+        fields:
+          - { label: "Slot / quando", name: "when", widget: "string" }
+          - { label: "Statistica", name: "stat", widget: "string" }
+      - { label: "Sub-statistiche", name: "subStats", widget: "list", required: false }
+      - { label: "Priorità abilità", name: "skillPriority", widget: "string", required: false }
+      - label: "Team consigliati"
+        name: "teams"
+        widget: "list"
+        required: false
+        fields:
+          - { label: "Nome team", name: "name", widget: "string" }
+          - { label: "Descrizione", name: "desc", widget: "string", required: false }
+          - { label: "Membri (nomi personaggi)", name: "members", widget: "list" }
+      - { label: "Tip", name: "tip", widget: "text", required: false }
+      - { label: "Nota finale", name: "note", widget: "text", required: false }
+      - { label: "Testo extra (opzionale)", name: "body", widget: "markdown", required: false }
+      # — campi automatici (nascosti) —
+      - { label: "Layout", name: "layout", widget: "hidden", default: "build" }
+      - { label: "Categoria", name: "category", widget: "hidden", default: "BUILD" }
+      - { label: "Tag", name: "tags", widget: "hidden", default: ["Build"] }
+      - { label: "Tempo di lettura", name: "readingTime", widget: "hidden", default: "5 min lettura" }
+      - { label: "Emoji", name: "emoji", widget: "hidden", default: "⚔️" }
+      - { label: "Colore sfondo", name: "thumb", widget: "hidden", default: "gt-creator" }
+      - { label: "Priorità news", name: "views", widget: "hidden", default: 0 }
+
+  # ═══════════════ 🏆 TIER LIST ═══════════════
+  - name: "tierlist"
+    label: "🏆 Tier List"
+    label_singular: "Tier List"
+    description: "Classifica di personaggi divisi in fasce (S, A, B, C...)."
+    folder: "src/content/guide/tierlist"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    editor: { preview: false }
+    fields:
+      - { label: "Titolo", name: "title", widget: "string", hint: "Es: NTE Tier List" }
+      - label: "Gioco"
+        name: "game"
+        widget: "select"
+        options:
+          - "Neverness To Everness"
+          - "Honkai Star Rail"
+          - "Wuthering Waves"
+          - "Zenless Zone Zero"
+          - "Arknights: Endfield"
+          - "GTA VI"
+          - "League of Legends"
+          - "Inazuma Eleven Cross"
+          - "Pokemon Champions"
+      - { label: "Sottotitolo (frase breve)", name: "description", widget: "string" }
+      - { label: "Data", name: "date", widget: "datetime", date_format: "DD/MM/YYYY", time_format: false, format: "YYYY-MM-DD", picker_utc: true }
+      - label: "Fasce (dalla più forte alla più debole)"
+        name: "tiers"
+        widget: "list"
+        fields:
+          - { label: "Rank", name: "rank", widget: "string", hint: "Es: S, A, B, C" }
+          - { label: "Colore", name: "color", widget: "color", default: "#FF3B3B" }
+          - { label: "Personaggi", name: "chars", widget: "list" }
+      - { label: "Copertina (opzionale)", name: "cover", widget: "image", required: false, choose_url: false }
+      # — campi automatici (nascosti) —
+      - { label: "Layout", name: "layout", widget: "hidden", default: "tierlist" }
+      - { label: "Categoria", name: "category", widget: "hidden", default: "GUIDA" }
+      - { label: "Tag", name: "tags", widget: "hidden", default: ["Tier List"] }
+      - { label: "Tempo di lettura", name: "readingTime", widget: "hidden", default: "3 min lettura" }
+      - { label: "Emoji", name: "emoji", widget: "hidden", default: "🏆" }
+      - { label: "Colore sfondo", name: "thumb", widget: "hidden", default: "gt-creator" }
+      - { label: "Priorità news", name: "views", widget: "hidden", default: 0 }
