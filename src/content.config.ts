@@ -16,7 +16,12 @@ const articleSchema = z.object({
   emoji: z.string().default("🎮"),         // emoji mostrata sulla copertina (se non c'è cover)
   cover: z.string().optional(),           // immagine di copertina della card (es. "/games/nte/cover.jpg")
   views: z.number().default(0),           // popolarità manuale: ordina "Top News" (numero più alto = più in alto)
-  tags: z.array(z.string()).default([]),  // etichette per i filtri nella pagina del gioco (es. ["Build"], ["Tier List"])
+  // etichette per i filtri nella pagina del gioco (es. ["Build"], ["Tier List"]).
+  // Robusto: accetta sia un singolo tag ("Build") sia una lista, e normalizza a lista.
+  tags: z.preprocess(
+    (v) => (v == null ? [] : Array.isArray(v) ? v : [v]),
+    z.array(z.string()),
+  ),
 
   // ─── Campi opzionali per le guide "build" (layout: "build") ───
   layout: z.enum(["build", "tierlist"]).optional(), // template grafico: build o tier list
