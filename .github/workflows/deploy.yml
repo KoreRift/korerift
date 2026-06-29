@@ -22,6 +22,9 @@ jobs:
       - name: Installa le dipendenze
         run: npm ci
 
+      - name: Ottimizza immagini caricate dall'editor (uploads)
+        run: node scripts/ottimizza-uploads.mjs
+
       - name: Costruisci il sito
         run: npm run build
 
