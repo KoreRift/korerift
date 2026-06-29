@@ -30,14 +30,16 @@ Quando hai finito e sei soddisfatto, **salva e pubblica**:
 ```powershell
 git add -A
 git commit -m "descrizione di cosa hai cambiato"
-git push                # salva su GitHub (backup)
-npm run build           # genera la cartella dist/
+git push
 ```
 
-Infine **carica il contenuto di `dist/` su TopHost via FTP** (FileZilla).
+Fatto: **il `git push` fa tutto da solo.** GitHub Actions costruisce il sito, ottimizza
+le immagini caricate e lo carica su TopHost via FTP automaticamente (~5 minuti).
+Niente più FileZilla. ✅
 
-> 💡 Più avanti possiamo automatizzare gli ultimi due passi con GitHub Actions:
-> a quel punto basterà `git push` e il sito si aggiorna da solo.
+> 💡 In alternativa, tu e i collaboratori potete scrivere i contenuti dall'**editor
+> online** su **korerift.com/admin** (login con GitHub): lì il salvataggio pubblica
+> da solo, senza toccare il terminale.
 
 ---
 
@@ -336,3 +338,57 @@ Dopo ogni modifica: guarda l'anteprima (`npm run dev`), poi salva e pubblica (pu
 - **Le icone della scheda build non compaiono** → il `name`/`members` non combacia
   col nome del file in `public/games/<gioco>/` (controlla maiuscole e underscore).
 - **Caratteri strani / accenti** → salva i file in formato UTF-8 (di default lo sono).
+
+---
+
+## 7. Aggiungere gli ASSET di un gioco nuovo (riepilogo)
+
+Quando hai pronto un gioco nuovo, ecco tutto in ordine. Lo fai **tu dal PC** (gli asset
+non passano dall'editor online dei collaboratori — li carichi una volta sola tu).
+
+Per ogni gioco servono **due tipi di immagini**:
+
+### A) Il banner (l'immagine grande in /giochi)
+- File JPG in formato **16:9** → `public/games/<slug>.jpg`
+- Mettilo in `public/games/` e lancia `npm run ottimizza` (dettagli al punto 4)
+
+### B) Le icone (personaggi, armi, moduli — PNG con trasparenza)
+Vanno nella sottocartella `public/games/<slug>/`, con i nomi in questa forma:
+
+```
+<slug>_icon_<Nome>.png      ← personaggio   (es. wuthering-waves_icon_Jinhsi.png)
+<slug>_weapon_<Nome>.png    ← arma          (es. wuthering-waves_weapon_Verdant_Summit.png)
+<slug>_module_<Nome>.png    ← modulo / eco
+```
+
+**Regole sui nomi** (le stesse che valgono nell'editor):
+- gli **spazi** diventano **underscore** `_`  ("Day Off" → `..._Day_Off.png`)
+- le **maiuscole contano** (`Jinhsi` ≠ `jinhsi`)
+- il `<Nome>` dopo `_icon_` dev'essere **identico** a quello che scrivi nell'editor
+
+Importa la cartella di icone (le ridimensiona a 256px e ottimizza da sola):
+
+```powershell
+npm run asset -- -Source "C:\percorso\della\cartella" -Slug <slug>
+```
+
+### C) Registra il gioco e pubblica
+1. Aggiungi il gioco in `src/data/games.ts` (vedi punto 3): `name`, `slug`, `image`, ecc.
+2. Salva e pubblica:
+   ```powershell
+   git add -A
+   git commit -m "Aggiunge gioco <nome> + asset"
+   git push
+   ```
+
+Da quel momento, nell'editor basta scegliere il gioco e scrivere i nomi: le icone si
+agganciano **da sole**. 🎮
+
+### Slug dei giochi attuali
+`nte` · `honkai-star-rail` · `wuthering-waves` · `zenless-zone-zero` ·
+`arknights-endfield` · `gta-vi` · `league-of-legends` · `inazuma-eleven-cross` ·
+`pokemon-champions`
+
+> 💡 **Slug lunghi?** Puoi dare un `assetPrefix` corto al gioco in `games.ts`
+> (es. `assetPrefix: "hsr"`): così i file si chiameranno `hsr_icon_Nome.png` invece di
+> `honkai-star-rail_icon_Nome.png`. Per NTE non serve (slug e prefisso coincidono).
